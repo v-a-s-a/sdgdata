@@ -1,6 +1,6 @@
 import httpx
 from typing import List, Optional
-from pyunsdg.models import ApiTarget, ApiObservationPage, ApiGeoArea
+from pyunsdg.models import ApiTarget, ApiObservationPage, ApiGeoArea, ApiGoal, ConceptsMasterData, SDMXMetaDataResponse
 
 # standard UNSD API base URL
 BASE_URL = "https://unstats.un.org/sdgapi/v1"
@@ -9,7 +9,7 @@ class UNSDClient:
     def __init__(self):
         self.client = httpx.Client(base_url=BASE_URL, timeout=30.0)
 
-    def get_all_targets(self, include_children: bool = True) -> List[ApiTarget]:
+    def get_target_list(self, include_children: bool = True) -> List[ApiTarget]:
         """
         Fetches all targets, optionally including their indicators and series.
         """
@@ -17,16 +17,49 @@ class UNSDClient:
         response.raise_for_status()
         data = response.json()
         return [ApiTarget(**item) for item in data]
+    
+    def get_goal_list(self) -> List[ApiGoal]:
+        """
+        Fetches all SDG goals.
+        """
+        response = self.client.get("/sdg/Goal/List")
+        response.raise_for_status()
+        data = response.json()
+        return [ApiGoal(**item) for item in data]
+    
+    def get_indicator_list(self, include_series: bool = True) -> List[ApiTarget]:
+        """
+        Fetches all indicators, optionally including their series.
+        """
+        response = self.client.get("/sdg/Indicator/List", params={"includechildren": include_series})
+        response.raise_for_status()
+        data = response.json()
+        return [ApiTarget(**item) for item in data]
+    
+    def get_geo_area_list(self) -> List[ApiGeoArea]:
+        """
+        Fetches all geographic areas.
+        """
+        response = self.client.get("/sdg/GeoArea/List")
+        response.raise_for_status()
+        data = response.json()
+        return [ApiGeoArea(**item) for item in data]
 
-    def get_target_metadata(self, target_code: str) -> List[ApiTarget]:
+    def get_concept_list(self) -> List[ConceptsMasterData]:
         """
-        Fetches metadata for a specific target to find its indicators and series.
-        Note: The API returns a list of all targets, so we filter client-side.
+        Fetches all concepts. The API does not provide a structured model for concepts, so we return raw dicts.
         """
-        all_targets = self.get_all_targets(include_children=True)
-        
-        # Filter for the specific target code
-        return [t for t in all_targets if t.code == target_code]
+        response = self.client.get("sdg/SDMXMetadata/GetConceptsMasterList")
+        response.raise_for_status()
+        return [ConceptsMasterData(**item) for item in response.json()]
+    
+    def get_sdmx_series_list(self) -> List[SDMXMetaDataResponse]:
+        """
+        Fetches all SDMX series metadata. The API does not provide a structured model for SDMX metadata, so we return raw dicts.
+        """
+        response = self.client.get("sdg/SDMXMetadata/GetSeries")
+        response.raise_for_status()
+        return response.json()
 
     def get_series_data(
         self, 
@@ -55,11 +88,5 @@ class UNSDClient:
         # Validate response against the generated ApiObservationPage model
         return ApiObservationPage(**response.json())
 
-    def get_geo_areas(self) -> List[ApiGeoArea]:
-        """
-        Fetches all geographic areas.
-        """
-        response = self.client.get("/sdg/GeoArea/List")
-        response.raise_for_status()
-        data = response.json()
-        return [ApiGeoArea(**item) for item in data]
+
+    
