@@ -1,6 +1,14 @@
 import httpx
 from typing import List, Optional
-from pyunsdg.models import ApiTarget, ApiObservationPage, ApiGeoArea, ApiGoal, ConceptsMasterData, SDMXMetaDataResponse
+from pyunsdg.models import (
+    ApiTarget, 
+    ApiObservationPage, 
+    ApiGeoArea, 
+    ApiGoal, 
+    ConceptsMasterData, 
+    SDMXMetaDataResponse,
+    ApiSerie
+)
 
 # standard UNSD API base URL
 BASE_URL = "https://unstats.un.org/sdgapi/v1"
@@ -8,6 +16,33 @@ BASE_URL = "https://unstats.un.org/sdgapi/v1"
 class UNSDClient:
     def __init__(self):
         self.client = httpx.Client(base_url=BASE_URL, timeout=30.0)
+
+    def get_targets(self) -> List[ApiTarget]:
+        """
+        Returns all targets and descriptions.
+        """
+        return self.get_target_list(include_children=False)
+
+    def get_series_codes(self, target_code: Optional[str] = None) -> List[ApiSerie]:
+        """
+        Returns all series codes and descriptions, optionally filtered by target code.
+        """
+        targets = self.get_target_list(include_children=True)
+        series_list = []
+        for target in targets:
+            if target_code and target.code != target_code:
+                continue
+            if target.indicators:
+                for indicator in target.indicators:
+                    if indicator.series:
+                        series_list.extend(indicator.series)
+        return series_list
+
+    def get_geo_areas(self) -> List[ApiGeoArea]:
+        """
+        Returns a list of geographic areas and their M49 codes.
+        """
+        return self.get_geo_area_list()
 
     def get_target_list(self, include_children: bool = True) -> List[ApiTarget]:
         """
