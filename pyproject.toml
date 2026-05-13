@@ -9,15 +9,13 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "bokeh>=3.8.1",
-    "cleo>=2.1.0",
-    "hvplot>=0.12.1",
-    "marimo>=0.17.7",
-    "openapi-python-client>=0.26.2",
-    "polars>=1.35.2",
-    "pyarrow>=22.0.0",
+    "httpx>=0.28.1",
     "pydantic>=2.12.3",
 ]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["pyunsdg*"]

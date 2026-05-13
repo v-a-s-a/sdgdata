@@ -3,6 +3,32 @@
 
 Using [openapi-python-client](https://github.com/openapi-generators/openapi-python-client) to generate a clean python SDK.
 
+## Local development install
+
+From another local Python project, install this package in editable mode:
+
+```bash
+python -m pip install -e /Users/vasa/Projects/pyunsdg
+```
+
+Or with uv:
+
+```bash
+uv add --editable /Users/vasa/Projects/pyunsdg
+```
+
+To build distributable artifacts:
+
+```bash
+uv build
+```
+
+Install the built wheel into another environment with:
+
+```bash
+python -m pip install /Users/vasa/Projects/pyunsdg/dist/pyunsdg-0.1.0-py3-none-any.whl
+```
+
 
 # Documentation
 
@@ -13,5 +39,4 @@ Workflow:
         swagger2openapi --outfile data/un-api-openapi.json data/un-api-swagger.json
 
 There are a few endpoints whose parameters names do not match
-
 

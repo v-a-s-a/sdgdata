@@ -102,12 +102,15 @@ class UNSDClient:
         area_code: Optional[str] = None,
         start_period: Optional[str] = None,
         end_period: Optional[str] = None
-    ) -> ApiObservationPage:
+    ) -> List[dict]:
         """
-        Pulls actual data observations for given series codes.
+        Pulls actual data observations for given series codes across all pages.
+        Returns a list of dictionaries, making it easy to create a Polars or Pandas DataFrame.
         """
         params = {
             "seriesCode": ",".join(series_codes),
+            "pageSize": 1000,
+            "page": 1
         }
         if area_code:
             params["areaCode"] = area_code
@@ -116,12 +119,25 @@ class UNSDClient:
         if end_period:
             params["timePeriodEnd"] = end_period
 
-        # /sdg/Series/Data is often more direct than generic Observation for this
-        response = self.client.get("/sdg/Series/Data", params=params)
-        response.raise_for_status()
-        
-        # Validate response against the generated ApiObservationPage model
-        return ApiObservationPage(**response.json())
+        all_observations = []
+
+        while True:
+            # /sdg/Series/Data is often more direct than generic Observation for this
+            response = self.client.get("/sdg/Series/Data", params=params)
+            response.raise_for_status()
+            
+            page_data = response.json()
+            observations = page_data.get("data", [])
+            all_observations.extend(observations)
+            
+            # Check if we have reached the last page
+            # UNSD API typically doesn't return exactly pageSize on last page, or returns empty next page
+            if not observations or len(observations) < params.get("pageSize", 100):
+                break
+                
+            params["page"] += 1
+
+        return all_observations
 
 
     

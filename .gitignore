@@ -11,3 +11,8 @@ wheels/
 
 # Macos
 .DS_Store
+
+# Local/exploratory project files
+conductor/
+notebooks/
+data/UNSD — Methodology.csv
