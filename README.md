@@ -29,6 +29,26 @@ Install the built wheel into another environment with:
 python -m pip install /Users/vasa/Projects/pyunsdg/dist/pyunsdg-0.1.0-py3-none-any.whl
 ```
 
+## Testing
+
+Run the default test suite with mocked UNSD API responses:
+
+```bash
+uv run pytest
+```
+
+Refresh the live-derived mock fixtures:
+
+```bash
+uv run python scripts/download_test_fixtures.py
+```
+
+Run the opt-in live UNSD API smoke test:
+
+```bash
+PYUNSDG_LIVE_TESTS=1 uv run pytest -m live
+```
+
 
 # Documentation
 
@@ -39,4 +59,3 @@ Workflow:
         swagger2openapi --outfile data/un-api-openapi.json data/un-api-swagger.json
 
 There are a few endpoints whose parameters names do not match
-

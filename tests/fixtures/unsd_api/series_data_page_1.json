@@ -1,0 +1,2754 @@
+{
+  "size": 1000,
+  "totalElements": 62,
+  "totalPages": 1,
+  "pageNumber": 1,
+  "attributes": [
+    {
+      "id": "Nature",
+      "codes": [
+        {
+          "code": "C",
+          "description": "Country data",
+          "sdmx": "C"
+        },
+        {
+          "code": "CA",
+          "description": "Country adjusted data",
+          "sdmx": "CA"
+        },
+        {
+          "code": "E",
+          "description": "Estimated data",
+          "sdmx": "E"
+        },
+        {
+          "code": "G",
+          "description": "Global monitoring data",
+          "sdmx": "G"
+        },
+        {
+          "code": "M",
+          "description": "Modeled data",
+          "sdmx": "M"
+        },
+        {
+          "code": "N",
+          "description": "Non-relevant",
+          "sdmx": "N"
+        },
+        {
+          "code": "NA",
+          "description": "Data nature not available",
+          "sdmx": "_X"
+        }
+      ]
+    },
+    {
+      "id": "Units",
+      "codes": [
+        {
+          "code": "PERCENT",
+          "description": "Percentage",
+          "sdmx": "PT"
+        }
+      ]
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "Age",
+      "codes": [
+        {
+          "code": "ALLAGE",
+          "description": "All age ranges or no breaks by age",
+          "sdmx": "_T"
+        },
+        {
+          "code": "60+",
+          "description": "60 years old and over",
+          "sdmx": "Y_GE60"
+        },
+        {
+          "code": "0-59",
+          "description": "under 59 years old",
+          "sdmx": "Y0T59"
+        }
+      ]
+    },
+    {
+      "id": "Location",
+      "codes": [
+        {
+          "code": "RURAL",
+          "description": "Rural",
+          "sdmx": "R"
+        },
+        {
+          "code": "ALLAREA",
+          "description": "All areas",
+          "sdmx": "_T"
+        },
+        {
+          "code": "URBAN",
+          "description": "Urban",
+          "sdmx": "U"
+        }
+      ]
+    },
+    {
+      "id": "Quantile",
+      "codes": [
+        {
+          "code": "Q1",
+          "description": "Quantile 1 (poorest)",
+          "sdmx": "Q1"
+        },
+        {
+          "code": "Q2",
+          "description": "Quantile 2",
+          "sdmx": "Q2"
+        },
+        {
+          "code": "Q3",
+          "description": "Quantile 3",
+          "sdmx": "Q3"
+        },
+        {
+          "code": "Q4",
+          "description": "Quantile 4",
+          "sdmx": "Q4"
+        },
+        {
+          "code": "Q5",
+          "description": "Quantile 5 (richest)",
+          "sdmx": "Q5"
+        },
+        {
+          "code": "_T",
+          "description": "Total (national average) or no breakdown",
+          "sdmx": "_T"
+        }
+      ]
+    },
+    {
+      "id": "Reporting Type",
+      "codes": [
+        {
+          "code": "R",
+          "description": "Regional",
+          "sdmx": "R"
+        },
+        {
+          "code": "N",
+          "description": "National",
+          "sdmx": "N"
+        },
+        {
+          "code": "G",
+          "description": "Global",
+          "sdmx": "G"
+        }
+      ]
+    },
+    {
+      "id": "Sex",
+      "codes": [
+        {
+          "code": "FEMALE",
+          "description": "Female",
+          "sdmx": "F"
+        },
+        {
+          "code": "MALE",
+          "description": "Male",
+          "sdmx": "M"
+        },
+        {
+          "code": "BOTHSEX",
+          "description": "Both sexes",
+          "sdmx": "_T"
+        }
+      ]
+    },
+    {
+      "id": "Type_of_household",
+      "codes": [
+        {
+          "code": "HH_ADTONLY",
+          "description": "Households composed only of people aged between 20 and 59 years old",
+          "sdmx": "HH_ADTONLY"
+        },
+        {
+          "code": "HH_ADTWCHLDADO",
+          "description": "Adults living with children (0 to 9 years old) and/or adolescents (10 to 19 years old)",
+          "sdmx": "HH_ADTWCHLDADO"
+        },
+        {
+          "code": "HH_MULTIGEN",
+          "description": "Households include adults living with people below 20 years old (children and/or adolescents) as well as older adults (60 years old or more)",
+          "sdmx": "HH_MULTIGEN"
+        },
+        {
+          "code": "HH_ADTWOLDER",
+          "description": "Households composed of adults living with at least one older person (60 years and older)",
+          "sdmx": "HH_ADTWOLDER"
+        },
+        {
+          "code": "HH_ONLYOLDER",
+          "description": "Households exclusively composed of older people ( (60 years and older)",
+          "sdmx": "HH_ONLYOLDER"
+        },
+        {
+          "code": "_T",
+          "description": "All type of households",
+          "sdmx": "_T"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "5.52",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "URBAN",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "29.42",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "RURAL",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "0.13",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q5",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "0.49",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q4",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "1.90",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q3",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "23.56",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q2",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "95.71",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q1",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "24.36",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "26.42",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_MULTIGEN"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "9.33",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTWOLDER"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "6.52",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTONLY"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "24.41",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Age": "0-59",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "24.14",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Age": "60+",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2007.0,
+      "value": "23.87",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan - National Risk and Vulnerability Assessment Survey 2007-2008- World Bank SHES serie",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTWCHLDADO"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "54.74",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "RURAL",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "46.84",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "91.13",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q1",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "46.80",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Age": "0-59",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "47.06",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Age": "60+",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "21.93",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "URBAN",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "5.30",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q5",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "9.52",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q4",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "35.73",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q3",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "92.47",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q2",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "43.04",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ONLYOLDER"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "47.93",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_MULTIGEN"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "25.23",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTWOLDER"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "46.99",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTWCHLDADO"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2013.0,
+      "value": "17.26",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Contiditions Survey 2013 ",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "G",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTONLY"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "32.01",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Age": "0-59",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "33.76",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Age": "60+",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "38.04",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "FEMALE",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "32.26",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "MALE",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "10.88",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTONLY"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "31.20",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTWCHLDADO"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "15.39",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "URBAN",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "37.59",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "RURAL",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "8.95",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q5",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "33.44",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q3",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "15.15",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q4",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "46.24",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q1",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "32.30",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "35.88",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_MULTIGEN"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "57.72",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q2",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2016.0,
+      "value": "15.21",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Living Conditions Survey 2016-17",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTWOLDER"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "68.27",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q1",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "34.56",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "27.19",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ONLYOLDER"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "27.98",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q3",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "37.64",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Age": "60+",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "33.97",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Age": "0-59",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "58.80",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q2",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "17.99",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "URBAN",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "39.84",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "RURAL",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "4.41",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q5",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "13.36",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "Q4",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "39.83",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_MULTIGEN"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "33.05",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTWCHLDADO"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "11.11",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTONLY"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "34.51",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "MALE",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "40.49",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "FEMALE",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "_T"
+      }
+    },
+    {
+      "goal": [
+        "3"
+      ],
+      "target": [
+        "3.8"
+      ],
+      "indicator": [
+        "3.8.2"
+      ],
+      "series": "SH_OOP_XPD_EARNNET40",
+      "seriesDescription": "Proportion of the population with positive out-of-pocket household expenditure on health exceeding 40% of household discretionary budget, by location, quintile, type of household and characteristics of the head of household (%)",
+      "seriesCount": "12271",
+      "geoAreaCode": "4",
+      "geoAreaName": "Afghanistan",
+      "timePeriodStart": 2020.0,
+      "value": "25.34",
+      "valueType": "Float",
+      "time_detail": null,
+      "timeCoverage": null,
+      "upperBound": null,
+      "lowerBound": null,
+      "basePeriod": null,
+      "source": "Afghanistan Income and Expenditure and Labor Force survey 2020",
+      "geoInfoUrl": null,
+      "footnotes": [
+        "Survey-based estimate, using household total consumption expenditure in the denominator"
+      ],
+      "attributes": {
+        "Nature": "CA",
+        "Units": "PERCENT"
+      },
+      "dimensions": {
+        "Age": "ALLAGE",
+        "Location": "ALLAREA",
+        "Sex": "BOTHSEX",
+        "Reporting Type": "G",
+        "Quantile": "_T",
+        "Type_of_household": "HH_ADTWOLDER"
+      }
+    }
+  ]
+}
