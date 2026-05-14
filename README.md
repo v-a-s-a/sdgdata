@@ -34,7 +34,7 @@ python -m pip install /Users/vasa/Projects/pyunsdg/dist/pyunsdg-0.1.0-py3-none-a
 Run the default test suite with mocked UNSD API responses:
 
 ```bash
-uv run pytest
+uv run pytest -m "not live"
 ```
 
 Refresh the live-derived mock fixtures:
@@ -48,6 +48,32 @@ Run the opt-in live UNSD API smoke test:
 ```bash
 PYUNSDG_LIVE_TESTS=1 uv run pytest -m live
 ```
+
+## Continuous integration
+
+GitHub Actions runs CI on pushes to `main`, pull requests targeting `main`,
+and manual workflow runs.
+
+The default CI job:
+
+1. Checks out the repository.
+2. Sets up Python 3.12.
+3. Installs dependencies with `uv sync --locked --all-groups`.
+4. Runs the mocked test suite with `uv run pytest -m "not live"`.
+5. Builds the wheel and source distribution with `uv build`.
+6. Uploads the files from `dist/` as a workflow artifact named `pyunsdg-dist`.
+
+These uploaded artifacts are downloadable from the GitHub Actions run page. They
+are build outputs only: the workflow does not create a GitHub Release and does
+not publish to PyPI yet.
+
+The live UNSD API smoke test is manual-only. From the Actions tab, run the CI
+workflow manually and enable `run_live_tests` to compare the committed mock
+fixtures with the live API.
+
+Future release automation can build on this by adding a tag-triggered workflow
+that creates a GitHub Release and publishes the same wheel/source distribution
+to PyPI.
 
 
 # Documentation
