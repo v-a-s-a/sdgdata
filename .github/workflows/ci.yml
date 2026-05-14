@@ -40,6 +40,9 @@ jobs:
       - name: Install dependencies
         run: uv sync --locked --all-groups
 
+      - name: Check generated models
+        run: uv run python scripts/generate_models.py --check
+
       - name: Run mocked tests
         run: uv run pytest -m "not live"
 

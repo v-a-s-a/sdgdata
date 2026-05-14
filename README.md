@@ -31,6 +31,12 @@ python -m pip install /Users/vasa/Projects/pyunsdg/dist/pyunsdg-0.1.0-py3-none-a
 
 ## Testing
 
+Check that generated models are current:
+
+```bash
+uv run python scripts/generate_models.py --check
+```
+
 Run the default test suite with mocked UNSD API responses:
 
 ```bash
@@ -59,9 +65,10 @@ The default CI job:
 1. Checks out the repository.
 2. Sets up Python 3.12.
 3. Installs dependencies with `uv sync --locked --all-groups`.
-4. Runs the mocked test suite with `uv run pytest -m "not live"`.
-5. Builds the wheel and source distribution with `uv build`.
-6. Uploads the files from `dist/` as a workflow artifact named `pyunsdg-dist`.
+4. Checks generated models with `uv run python scripts/generate_models.py --check`.
+5. Runs the mocked test suite with `uv run pytest -m "not live"`.
+6. Builds the wheel and source distribution with `uv build`.
+7. Uploads the files from `dist/` as a workflow artifact named `pyunsdg-dist`.
 
 These uploaded artifacts are downloadable from the GitHub Actions run page. They
 are build outputs only: the workflow does not create a GitHub Release and does
@@ -78,10 +85,38 @@ to PyPI.
 
 # Documentation
 
-Workflow:
-- Pulled the API spec from the UNSD website: https://unstats.un.org/sdgapi/swagger/v1/swagger.json
-- The `openapi-python-client` does not support Swagger formatted specifications. I convert to an OpenAPI formatted specification using the [`swagger2openapi`](https://www.npmjs.com/package/swagger2openapi) package, with the following command:
-    
-        swagger2openapi --outfile data/un-api-openapi.json data/un-api-swagger.json
+## Model generation
 
-There are a few endpoints whose parameters names do not match
+The committed `data/un-api-openapi.json` file is the source of truth for
+generated models. Model generation uses `openapi-python-client` and commits two
+outputs:
+
+- `generated/openapi_python_client/`: the model-related output from
+  `openapi-python-client`, kept outside the public package for reviewable diffs.
+- `src/pyunsdg/models.py`: the Pydantic compatibility layer used by the
+  hand-written `UNSDClient` and existing public imports such as
+  `from pyunsdg.models import ApiTarget`.
+
+Regenerate committed model files after changing `data/un-api-openapi.json`:
+
+```bash
+uv run python scripts/generate_models.py
+```
+
+Check whether generated files are stale without changing the working tree:
+
+```bash
+uv run python scripts/generate_models.py --check
+```
+
+Package builds do not regenerate models. `uv build` packages the committed
+source files, and CI runs the stale-generation check before tests and build.
+
+Swagger-to-OpenAPI conversion is separate from package builds and model
+generation. If you refresh the upstream Swagger document from
+https://unstats.un.org/sdgapi/swagger/v1/swagger.json, convert it separately,
+for example:
+
+```bash
+swagger2openapi --outfile data/un-api-openapi.json data/un-api-swagger.json
+```
