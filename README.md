@@ -30,7 +30,7 @@ client = UNSDClient()
 areas = client.get_geo_areas()
 targets = client.get_targets()
 
-# Find series codes for a target.
+# Find latest-release series codes for a target.
 series = client.get_series_codes(target_code="3.8")
 
 # Fetch observations for one or more series.

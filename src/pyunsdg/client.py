@@ -1,5 +1,8 @@
-import httpx
+import re
 from typing import List, Optional
+
+import httpx
+
 from pyunsdg.models import (
     ApiTarget, 
     ApiObservationPage, 
@@ -12,6 +15,38 @@ from pyunsdg.models import (
 
 # standard UNSD API base URL
 BASE_URL = "https://unstats.un.org/sdgapi/v1"
+_RELEASE_PATTERN = re.compile(r"^(\d{4})\.Q(\d+)\.G\.(\d+)$")
+
+
+def _release_sort_key(release: Optional[str]) -> tuple[int, int, int]:
+    match = _RELEASE_PATTERN.match(release or "")
+    if match is None:
+        return (-1, -1, -1)
+    return tuple(int(part) for part in match.groups())
+
+
+def _period_value(period: Optional[str]) -> Optional[int]:
+    if period is None:
+        return None
+    return int(period)
+
+
+def _period_query_values(
+    start_period: Optional[str],
+    end_period: Optional[str],
+) -> Optional[list[str]]:
+    start = _period_value(start_period)
+    end = _period_value(end_period)
+    if start is None and end is None:
+        return None
+    if start is None:
+        start = end
+    if end is None:
+        end = start
+    if end < start:
+        return []
+    return [str(year) for year in range(start, end + 1)]
+
 
 class UNSDClient:
     def __init__(self):
@@ -23,9 +58,11 @@ class UNSDClient:
         """
         return self.get_target_list(include_children=False)
 
-    def get_series_codes(self, target_code: Optional[str] = None) -> List[ApiSerie]:
+    def get_series_codes(
+        self, target_code: Optional[str] = None, *, all_releases: bool = False
+    ) -> List[ApiSerie]:
         """
-        Returns all series codes and descriptions, optionally filtered by target code.
+        Returns latest series codes and descriptions, optionally filtered by target code.
         """
         targets = self.get_target_list(include_children=True)
         series_list = []
@@ -36,7 +73,20 @@ class UNSDClient:
                 for indicator in target.indicators:
                     if indicator.series:
                         series_list.extend(indicator.series)
-        return series_list
+        if all_releases:
+            return series_list
+
+        latest_by_code = {}
+        for series in series_list:
+            if series.code is None:
+                continue
+            current = latest_by_code.get(series.code)
+            if current is None or _release_sort_key(series.release) > _release_sort_key(
+                current.release
+            ):
+                latest_by_code[series.code] = series
+
+        return list(latest_by_code.values())
 
     def get_geo_areas(self) -> List[ApiGeoArea]:
         """
@@ -101,7 +151,8 @@ class UNSDClient:
         series_codes: List[str], 
         area_code: Optional[str] = None,
         start_period: Optional[str] = None,
-        end_period: Optional[str] = None
+        end_period: Optional[str] = None,
+        release_code: Optional[str] = None
     ) -> List[dict]:
         """
         Pulls actual data observations for given series codes across all pages.
@@ -114,10 +165,13 @@ class UNSDClient:
         }
         if area_code:
             params["areaCode"] = area_code
-        if start_period:
-            params["timePeriodStart"] = start_period
-        if end_period:
-            params["timePeriodEnd"] = end_period
+        if release_code:
+            params["releaseCode"] = release_code
+        time_periods = _period_query_values(start_period, end_period)
+        if time_periods == []:
+            return []
+        if time_periods is not None:
+            params["timePeriod"] = time_periods
 
         all_observations = []
 
@@ -129,15 +183,15 @@ class UNSDClient:
             page_data = response.json()
             observations = page_data.get("data", [])
             all_observations.extend(observations)
-            
-            # Check if we have reached the last page
-            # UNSD API typically doesn't return exactly pageSize on last page, or returns empty next page
+
+            total_pages = page_data.get("totalPages")
+            if total_pages is not None and params["page"] >= int(total_pages):
+                break
+
+            # UNSD may omit totalPages, so fall back to response size.
             if not observations or len(observations) < params.get("pageSize", 100):
                 break
                 
             params["page"] += 1
 
         return all_observations
-
-
-    
