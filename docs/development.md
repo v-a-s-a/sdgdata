@@ -22,7 +22,7 @@ uv sync --locked --all-groups
 Run the default deterministic test suite with mocked UNSD API responses:
 
 ```bash
-uv run pytest -m "not live"
+uv run pytest -m mock
 ```
 
 The mocked tests use live-derived JSON fixtures committed under
@@ -69,7 +69,7 @@ The default CI workflow:
 1. Sets up Python 3.12 and `uv`.
 2. Installs dependencies with `uv sync --locked --all-groups`.
 3. Checks generated models with `uv run python scripts/generate_models.py --check`.
-4. Runs `uv run pytest -m "not live"`.
+4. Runs `uv run pytest -m mock`.
 5. Builds release artifacts with `uv build`.
 6. Uploads the `dist/` wheel and source distribution as the `pyunsdg-dist`
    workflow artifact.

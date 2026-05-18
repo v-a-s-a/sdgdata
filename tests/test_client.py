@@ -1,10 +1,14 @@
 import httpx
+import pytest
 import respx
 
 from pyunsdg import UNSDClient
 from pyunsdg.client import BASE_URL
 from pyunsdg.models import ApiGeoArea, ApiSerie, ApiTarget
 from tests.helpers import AREA_CODE, SERIES_CODE, TARGET_CODE, load_fixture
+
+
+pytestmark = pytest.mark.mock
 
 
 @respx.mock
