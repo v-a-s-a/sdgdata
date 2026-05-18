@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "pyunsdg"
 version = "0.1.0"
-description = "Add your description here"
+description = "Simple Python client for the United Nations Statistics Division SDG API"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
