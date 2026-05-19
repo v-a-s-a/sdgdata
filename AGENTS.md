@@ -52,6 +52,14 @@ uv run python scripts/download_test_fixtures.py
 After refreshing fixtures, run the default tests and inspect the fixture diff
 before committing.
 
+#### Test Data Philosophy
+Mocked tests should use committed JSON responses saved from the live UNSD API.
+Prefer reusing records from `tests/fixtures/unsd_api/` over hand-written
+response payloads so tests exercise realistic response shapes. If existing
+fixtures do not cover a behavior, query the live UNSD API, save the smallest
+useful response as a fixture, and write tests against that saved data rather
+than embedding synthetic API records inline.
+
 #### Running Live Smoke Tests
 Live API tests are opt-in because they call the external UNSD API. They compare
 the committed mock fixture shape against current live API responses:

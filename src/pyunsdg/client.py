@@ -1,5 +1,7 @@
+import json
 import re
-from typing import List, Optional
+from collections.abc import Mapping, Sequence
+from typing import Literal, List, Optional
 
 import httpx
 
@@ -10,12 +12,16 @@ from pyunsdg.models import (
     ApiGoal, 
     ConceptsMasterData, 
     SDMXMetaDataResponse,
-    ApiSerie
+    ApiSerie,
+    ApiDimension,
 )
 
 # standard UNSD API base URL
 BASE_URL = "https://unstats.un.org/sdgapi/v1"
 _RELEASE_PATTERN = re.compile(r"^(\d{4})\.Q(\d+)\.G\.(\d+)$")
+DimensionMode = Literal["coarsest", "all"]
+DimensionFilters = Mapping[str, str | Sequence[str]]
+DimensionArgument = DimensionMode | DimensionFilters
 
 
 def _release_sort_key(release: Optional[str]) -> tuple[int, int, int]:
@@ -46,6 +52,99 @@ def _period_query_values(
     if end < start:
         return []
     return [str(year) for year in range(start, end + 1)]
+
+
+def _dimension_payload(dimensions: DimensionFilters) -> str:
+    payload = []
+    for name, values in dimensions.items():
+        if isinstance(values, str):
+            values = [values]
+        payload.append({"name": name, "values": list(values)})
+    return json.dumps(payload, separators=(",", ":"))
+
+
+def _coarsest_dimension_filters(dimensions: List[ApiDimension]) -> dict[str, str]:
+    filters = {}
+    preferred_codes = {
+        "age": ["ALLAGE"],
+        "sex": ["BOTHSEX"],
+        "location": ["ALLAREA"],
+        "reporting type": ["G", "N", "R"],
+    }
+    total_description_markers = (
+        "total",
+        "all ",
+        "all age",
+        "both",
+        "no break",
+        "no breakdown",
+        "national average",
+    )
+
+    for dimension in dimensions:
+        if dimension.id is None or not dimension.codes:
+            continue
+
+        dimension_id = dimension.id.lower()
+        selected_code = None
+
+        for preferred_code in preferred_codes.get(dimension_id, []):
+            selected_code = next(
+                (code for code in dimension.codes if code.code == preferred_code),
+                None,
+            )
+            if selected_code is not None:
+                break
+
+        if selected_code is None:
+            selected_code = next(
+                (
+                    code
+                    for code in dimension.codes
+                    if code.code == "_T" or code.sdmx == "_T"
+                ),
+                None,
+            )
+
+        if selected_code is None:
+            selected_code = next(
+                (
+                    code
+                    for code in dimension.codes
+                    if code.description
+                    and any(
+                        marker in code.description.lower()
+                        for marker in total_description_markers
+                    )
+                ),
+                None,
+            )
+
+        if selected_code is None:
+            selected_code = dimension.codes[0]
+
+        if selected_code.code is not None:
+            filters[dimension.id] = selected_code.code
+
+    return filters
+
+
+def _time_series_key(record: dict) -> tuple:
+    dimensions = record.get("dimensions") or {}
+    return (
+        record.get("series"),
+        record.get("geoAreaCode"),
+        tuple(sorted(dimensions.items())),
+    )
+
+
+def is_single_time_series(records: list[dict]) -> bool:
+    """
+    Returns whether records contain exactly one series/area/dimension time series.
+    """
+    if not records:
+        return False
+    return len({_time_series_key(record) for record in records}) == 1
 
 
 class UNSDClient:
@@ -146,23 +245,28 @@ class UNSDClient:
         response.raise_for_status()
         return response.json()
 
+    def get_series_dimensions(self, series_code: str) -> List[ApiDimension]:
+        """
+        Fetches available disaggregation dimensions for a series.
+        """
+        response = self.client.get(f"/sdg/Series/{series_code}/Dimensions")
+        response.raise_for_status()
+        return [ApiDimension(**item) for item in response.json()]
+
     def get_series_data(
         self, 
         series_codes: List[str], 
         area_code: Optional[str] = None,
         start_period: Optional[str] = None,
         end_period: Optional[str] = None,
-        release_code: Optional[str] = None
+        release_code: Optional[str] = None,
+        dimensions: DimensionArgument = "coarsest",
     ) -> List[dict]:
         """
         Pulls actual data observations for given series codes across all pages.
         Returns a list of dictionaries, making it easy to create a Polars or Pandas DataFrame.
         """
-        params = {
-            "seriesCode": ",".join(series_codes),
-            "pageSize": 1000,
-            "page": 1
-        }
+        params = {"pageSize": 1000}
         if area_code:
             params["areaCode"] = area_code
         if release_code:
@@ -173,6 +277,30 @@ class UNSDClient:
         if time_periods is not None:
             params["timePeriod"] = time_periods
 
+        if dimensions == "coarsest":
+            all_observations = []
+            for series_code in series_codes:
+                series_params = {**params, "seriesCode": series_code}
+                coarsest_dimensions = _coarsest_dimension_filters(
+                    self.get_series_dimensions(series_code)
+                )
+                if coarsest_dimensions:
+                    series_params["dimensions"] = _dimension_payload(
+                        coarsest_dimensions
+                    )
+                all_observations.extend(self._fetch_series_data(series_params))
+            return all_observations
+
+        params["seriesCode"] = ",".join(series_codes)
+        if dimensions != "all":
+            if not isinstance(dimensions, Mapping):
+                raise ValueError('dimensions must be "coarsest", "all", or a mapping')
+            params["dimensions"] = _dimension_payload(dimensions)
+
+        return self._fetch_series_data(params)
+
+    def _fetch_series_data(self, params: dict) -> List[dict]:
+        params = {**params, "page": 1}
         all_observations = []
 
         while True:
