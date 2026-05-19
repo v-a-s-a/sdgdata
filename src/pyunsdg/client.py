@@ -37,21 +37,21 @@ def _period_value(period: Optional[str]) -> Optional[int]:
     return int(period)
 
 
-def _period_query_values(
+def _period_query_params(
     start_period: Optional[str],
     end_period: Optional[str],
-) -> Optional[list[str]]:
+) -> Optional[dict[str, str]]:
     start = _period_value(start_period)
     end = _period_value(end_period)
     if start is None and end is None:
         return None
-    if start is None:
-        start = end
     if end is None:
-        end = start
+        raise ValueError("start_period and end_period must be provided together")
+    if start is None:
+        raise ValueError("start_period and end_period must be provided together")
     if end < start:
-        return []
-    return [str(year) for year in range(start, end + 1)]
+        return {}
+    return {"timePeriodStart": str(start), "timePeriodEnd": str(end)}
 
 
 def _dimension_payload(dimensions: DimensionFilters) -> str:
@@ -271,11 +271,11 @@ class UNSDClient:
             params["areaCode"] = area_code
         if release_code:
             params["releaseCode"] = release_code
-        time_periods = _period_query_values(start_period, end_period)
-        if time_periods == []:
+        time_period_params = _period_query_params(start_period, end_period)
+        if time_period_params == {}:
             return []
-        if time_periods is not None:
-            params["timePeriod"] = time_periods
+        if time_period_params is not None:
+            params.update(time_period_params)
 
         if dimensions == "coarsest":
             all_observations = []

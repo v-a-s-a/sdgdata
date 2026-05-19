@@ -208,7 +208,7 @@ def test_get_series_data_sends_custom_dimensions():
 
 
 @respx.mock
-def test_get_series_data_sends_expanded_time_period_range():
+def test_get_series_data_sends_time_period_range():
     _mock_series_dimensions()
     observations = load_fixture("series_data_page_1.json")["data"][:3]
     route = respx.get(f"{BASE_URL}/sdg/Series/Data").mock(
@@ -226,10 +226,60 @@ def test_get_series_data_sends_expanded_time_period_range():
     )
 
     request = route.calls.last.request
+    assert "timePeriod" not in request.url.params
+    assert request.url.params["timePeriodStart"] == "2015"
+    assert request.url.params["timePeriodEnd"] == "2017"
+    assert data == observations
+
+
+@respx.mock
+def test_get_series_data_omits_time_period_params_by_default():
+    _mock_series_dimensions()
+    fixture = load_fixture("series_data_page_1.json")
+    route = respx.get(f"{BASE_URL}/sdg/Series/Data").mock(
+        return_value=httpx.Response(200, json=fixture)
+    )
+
+    UNSDClient().get_series_data([SERIES_CODE], area_code=AREA_CODE)
+
+    request = route.calls.last.request
+    assert "timePeriod" not in request.url.params
     assert "timePeriodStart" not in request.url.params
     assert "timePeriodEnd" not in request.url.params
-    assert request.url.params.get_list("timePeriod") == ["2015", "2016", "2017"]
-    assert data == observations
+
+
+@respx.mock
+def test_get_series_data_returns_empty_for_inverted_time_period_range():
+    dimensions_route = _mock_series_dimensions()
+    route = respx.get(f"{BASE_URL}/sdg/Series/Data").mock(
+        return_value=httpx.Response(200, json={"data": []})
+    )
+
+    data = UNSDClient().get_series_data(
+        [SERIES_CODE],
+        start_period="2017",
+        end_period="2015",
+    )
+
+    assert data == []
+    assert not dimensions_route.called
+    assert not route.called
+
+
+def test_get_series_data_requires_end_period_with_start_period():
+    with pytest.raises(
+        ValueError,
+        match="start_period and end_period must be provided together",
+    ):
+        UNSDClient().get_series_data([SERIES_CODE], start_period="2015")
+
+
+def test_get_series_data_requires_start_period_with_end_period():
+    with pytest.raises(
+        ValueError,
+        match="start_period and end_period must be provided together",
+    ):
+        UNSDClient().get_series_data([SERIES_CODE], end_period="2017")
 
 
 @respx.mock
