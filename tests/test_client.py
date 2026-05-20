@@ -4,13 +4,20 @@ import httpx
 import pytest
 import respx
 
-from pyunsdg import UNSDClient, is_single_time_series
+from pyunsdg import UNSDClient, debug, is_single_time_series
 from pyunsdg.client import BASE_URL, _release_sort_key
 from pyunsdg.models import ApiDimension, ApiGeoArea, ApiSerie, ApiTarget
 from tests.helpers import AREA_CODE, SERIES_CODE, TARGET_CODE, load_fixture
 
 
 pytestmark = pytest.mark.mock
+
+
+@pytest.fixture(autouse=True)
+def disable_debug_output():
+    debug.disable()
+    yield
+    debug.disable()
 
 
 @respx.mock
@@ -24,6 +31,36 @@ def test_get_geo_areas_returns_live_derived_pydantic_models():
 
     assert route.called
     assert areas == [ApiGeoArea(**item) for item in fixture]
+
+
+@respx.mock
+def test_debug_output_is_disabled_by_default(capsys):
+    fixture = load_fixture("geo_area_list.json")
+    respx.get(f"{BASE_URL}/sdg/GeoArea/List").mock(
+        return_value=httpx.Response(200, json=fixture)
+    )
+
+    UNSDClient().get_geo_areas()
+
+    captured = capsys.readouterr()
+    assert captured.err == ""
+
+
+@respx.mock
+def test_debug_output_prints_constructed_query(capsys):
+    fixture = load_fixture("target_list_without_children.json")
+    respx.get(f"{BASE_URL}/sdg/Target/List").mock(
+        return_value=httpx.Response(200, json=fixture)
+    )
+
+    debug.enable()
+    UNSDClient().get_targets()
+
+    captured = capsys.readouterr()
+    assert captured.out == ""
+    assert captured.err == (
+        f"pyunsdg query: {BASE_URL}/sdg/Target/List?includechildren=false\n"
+    )
 
 
 @respx.mock
@@ -300,6 +337,27 @@ def test_get_series_data_paginates_until_partial_page():
     assert route.call_count == 2
     assert route.calls[0].request.url.params["page"] == "1"
     assert route.calls[1].request.url.params["page"] == "2"
+
+
+@respx.mock
+def test_debug_output_prints_each_paginated_series_data_query(capsys):
+    fixture = load_fixture("series_data_page_1.json")
+    observation = fixture["data"][0]
+    respx.get(f"{BASE_URL}/sdg/Series/Data").mock(
+        side_effect=[
+            httpx.Response(200, json={"data": [observation] * 1000}),
+            httpx.Response(200, json={"data": [observation]}),
+        ]
+    )
+
+    debug.enable()
+    UNSDClient().get_series_data([SERIES_CODE], area_code=AREA_CODE, dimensions="all")
+
+    lines = capsys.readouterr().err.splitlines()
+    assert len(lines) == 2
+    assert all(line.startswith(f"pyunsdg query: {BASE_URL}/sdg/Series/Data?") for line in lines)
+    assert "page=1" in lines[0]
+    assert "page=2" in lines[1]
 
 
 @respx.mock

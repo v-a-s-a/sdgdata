@@ -5,6 +5,7 @@ from typing import Literal, List, Optional
 
 import httpx
 
+from . import debug
 from pyunsdg.models import (
     ApiTarget, 
     ApiObservationPage, 
@@ -151,6 +152,11 @@ class UNSDClient:
     def __init__(self):
         self.client = httpx.Client(base_url=BASE_URL, timeout=30.0)
 
+    def _get(self, url: str, *, params: Optional[dict] = None) -> httpx.Response:
+        request = self.client.build_request("GET", url, params=params)
+        debug.print_query(request)
+        return self.client.send(request)
+
     def get_targets(self) -> List[ApiTarget]:
         """
         Returns all targets and descriptions.
@@ -197,7 +203,7 @@ class UNSDClient:
         """
         Fetches all targets, optionally including their indicators and series.
         """
-        response = self.client.get("/sdg/Target/List", params={"includechildren": include_children})
+        response = self._get("/sdg/Target/List", params={"includechildren": include_children})
         response.raise_for_status()
         data = response.json()
         return [ApiTarget(**item) for item in data]
@@ -206,7 +212,7 @@ class UNSDClient:
         """
         Fetches all SDG goals.
         """
-        response = self.client.get("/sdg/Goal/List")
+        response = self._get("/sdg/Goal/List")
         response.raise_for_status()
         data = response.json()
         return [ApiGoal(**item) for item in data]
@@ -215,7 +221,7 @@ class UNSDClient:
         """
         Fetches all indicators, optionally including their series.
         """
-        response = self.client.get("/sdg/Indicator/List", params={"includechildren": include_series})
+        response = self._get("/sdg/Indicator/List", params={"includechildren": include_series})
         response.raise_for_status()
         data = response.json()
         return [ApiTarget(**item) for item in data]
@@ -224,7 +230,7 @@ class UNSDClient:
         """
         Fetches all geographic areas.
         """
-        response = self.client.get("/sdg/GeoArea/List")
+        response = self._get("/sdg/GeoArea/List")
         response.raise_for_status()
         data = response.json()
         return [ApiGeoArea(**item) for item in data]
@@ -233,7 +239,7 @@ class UNSDClient:
         """
         Fetches all concepts. The API does not provide a structured model for concepts, so we return raw dicts.
         """
-        response = self.client.get("sdg/SDMXMetadata/GetConceptsMasterList")
+        response = self._get("sdg/SDMXMetadata/GetConceptsMasterList")
         response.raise_for_status()
         return [ConceptsMasterData(**item) for item in response.json()]
     
@@ -241,7 +247,7 @@ class UNSDClient:
         """
         Fetches all SDMX series metadata. The API does not provide a structured model for SDMX metadata, so we return raw dicts.
         """
-        response = self.client.get("sdg/SDMXMetadata/GetSeries")
+        response = self._get("sdg/SDMXMetadata/GetSeries")
         response.raise_for_status()
         return response.json()
 
@@ -249,7 +255,7 @@ class UNSDClient:
         """
         Fetches available disaggregation dimensions for a series.
         """
-        response = self.client.get(f"/sdg/Series/{series_code}/Dimensions")
+        response = self._get(f"/sdg/Series/{series_code}/Dimensions")
         response.raise_for_status()
         return [ApiDimension(**item) for item in response.json()]
 
@@ -305,7 +311,7 @@ class UNSDClient:
 
         while True:
             # /sdg/Series/Data is often more direct than generic Observation for this
-            response = self.client.get("/sdg/Series/Data", params=params)
+            response = self._get("/sdg/Series/Data", params=params)
             response.raise_for_status()
             
             page_data = response.json()

@@ -1,3 +1,4 @@
+from . import debug
 from .client import UNSDClient, is_single_time_series
 from .models import (
     ApiTarget, 
@@ -9,6 +10,7 @@ from .models import (
 
 __all__ = [
     "UNSDClient",
+    "debug",
     "is_single_time_series",
     "ApiTarget",
     "ApiObservationPage",
