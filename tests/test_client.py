@@ -242,10 +242,10 @@ def test_get_series_data_sends_time_period_range():
     _mock_series_dimensions()
     observations = load_fixture("series_data_page_1.json")["data"][:3]
     route = respx.get(f"{BASE_URL}/sdg/Series/Data").mock(
-        return_value=httpx.Response(
-            200,
-            json={"data": observations, "totalPages": 1},
-        )
+        side_effect=[
+            httpx.Response(200, json={"data": [observation], "totalPages": 1})
+            for observation in observations
+        ]
     )
 
     data = UNSDClient().get_series_data(
@@ -255,10 +255,12 @@ def test_get_series_data_sends_time_period_range():
         end_period="2017",
     )
 
-    request = route.calls.last.request
-    assert "timePeriod" not in request.url.params
-    assert request.url.params["timePeriodStart"] == "2015"
-    assert request.url.params["timePeriodEnd"] == "2017"
+    assert route.call_count == 3
+    for call, time_period in zip(route.calls, ["2015", "2016", "2017"], strict=True):
+        request = call.request
+        assert request.url.params.get_list("timePeriod") == [time_period]
+        assert "timePeriodStart" not in request.url.params
+        assert "timePeriodEnd" not in request.url.params
     assert data == observations
 
 

@@ -41,7 +41,7 @@ def _period_value(period: str | None) -> int | None:
 def _period_query_params(
     start_period: str | None,
     end_period: str | None,
-) -> dict[str, str] | None:
+) -> dict[str, list[str]] | None:
     start = _period_value(start_period)
     end = _period_value(end_period)
     if start is None and end is None:
@@ -52,7 +52,7 @@ def _period_query_params(
         raise ValueError("start_period and end_period must be provided together")
     if end < start:
         return {}
-    return {"timePeriodStart": str(start), "timePeriodEnd": str(end)}
+    return {"timePeriod": [str(period) for period in range(start, end + 1)]}
 
 
 def _dimension_payload(dimensions: DimensionFilters) -> str:
@@ -299,6 +299,14 @@ class UNSDClient:
         return self._fetch_series_data(params)
 
     def _fetch_series_data(self, params: dict) -> list[dict]:
+        time_periods = params.get("timePeriod")
+        if isinstance(time_periods, list) and len(time_periods) > 1 and "dimensions" in params:
+            all_observations = []
+            for time_period in time_periods:
+                period_params = {**params, "timePeriod": [time_period]}
+                all_observations.extend(self._fetch_series_data(period_params))
+            return all_observations
+
         params = {**params, "page": 1}
         all_observations = []
 
