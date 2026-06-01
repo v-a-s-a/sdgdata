@@ -15,7 +15,6 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-
 ROOT = Path(__file__).resolve().parents[1]
 OPENAPI_PATH = ROOT / "data" / "un-api-openapi.json"
 COMMITTED_OPENAPI_CLIENT = ROOT / "generated" / "openapi_python_client"
@@ -24,7 +23,9 @@ COMMITTED_MODELS = ROOT / "src" / "pyunsdg" / "models.py"
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Generate committed OpenAPI client model output and Pydantic compatibility models."
+        description=(
+            "Generate committed OpenAPI client model output and Pydantic compatibility models."
+        )
     )
     parser.add_argument(
         "--check",
@@ -41,6 +42,7 @@ def main() -> int:
         run_openapi_python_client(generated_client)
         normalize_openapi_client_output(generated_client)
         generated_models.write_text(render_pydantic_models(), encoding="utf-8")
+        format_python_file(generated_models)
 
         if args.check:
             return check_generated_files(generated_client, generated_models)
@@ -80,6 +82,23 @@ def normalize_openapi_client_output(output_path: Path) -> None:
             shutil.rmtree(path)
         elif path.exists():
             path.unlink()
+
+
+def format_python_file(path: Path) -> None:
+    subprocess.run(
+        [sys.executable, "-m", "ruff", "check", "--fix", "--exit-zero", "--quiet", str(path)],
+        cwd=ROOT,
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+    subprocess.run(
+        [sys.executable, "-m", "ruff", "format", str(path)],
+        cwd=ROOT,
+        check=True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
 
 
 def render_pydantic_models() -> str:
@@ -127,10 +146,7 @@ def render_class(name: str, schema: dict[str, Any], class_names: set[str]) -> st
         field_name = python_identifier(property_name)
         annotation = f"Optional[{type_annotation(property_schema, class_names)}]"
         description = property_schema.get("description")
-        if description:
-            field = f"Field(None, description={description!r})"
-        else:
-            field = "None"
+        field = f"Field(None, description={description!r})" if description else "None"
         if field_name != property_name:
             if description:
                 field = f"Field(None, alias={property_name!r}, description={description!r})"
@@ -146,7 +162,7 @@ def type_annotation(schema: dict[str, Any], class_names: set[str]) -> str:
         name = schema["$ref"].rsplit("/", 1)[1]
         return name if name in class_names else "Any"
 
-    if "allOf" in schema and schema["allOf"]:
+    if schema.get("allOf"):
         return type_annotation(schema["allOf"][0], class_names)
 
     schema_type = schema.get("type")
@@ -196,14 +212,18 @@ def schema_references(schema: dict[str, Any], name: str) -> bool:
 def check_generated_files(generated_client: Path, generated_models: Path) -> int:
     stale = False
     if not directories_match(generated_client, COMMITTED_OPENAPI_CLIENT):
+        relative_client = COMMITTED_OPENAPI_CLIENT.relative_to(ROOT)
         print(
-            f"Generated OpenAPI client models are stale: {COMMITTED_OPENAPI_CLIENT.relative_to(ROOT)}",
+            f"Generated OpenAPI client models are stale: {relative_client}",
             file=sys.stderr,
         )
         stale = True
 
     if not files_match(generated_models, COMMITTED_MODELS):
-        print(f"Generated Pydantic models are stale: {COMMITTED_MODELS.relative_to(ROOT)}", file=sys.stderr)
+        print(
+            f"Generated Pydantic models are stale: {COMMITTED_MODELS.relative_to(ROOT)}",
+            file=sys.stderr,
+        )
         stale = True
 
     if stale:
@@ -218,12 +238,14 @@ def directories_match(left: Path, right: Path) -> bool:
     if not right.exists():
         return False
     comparison = filecmp.dircmp(left, right)
-    if comparison.left_only or comparison.right_only or comparison.diff_files or comparison.funny_files:
+    if (
+        comparison.left_only
+        or comparison.right_only
+        or comparison.diff_files
+        or comparison.funny_files
+    ):
         return False
-    return all(
-        directories_match(left / name, right / name)
-        for name in comparison.common_dirs
-    )
+    return all(directories_match(left / name, right / name) for name in comparison.common_dirs)
 
 
 def files_match(left: Path, right: Path) -> bool:

@@ -396,6 +396,7 @@ dev = [
     { name = "openapi-python-client" },
     { name = "pytest" },
     { name = "respx" },
+    { name = "ruff" },
 ]
 
 [package.metadata]
@@ -409,6 +410,7 @@ dev = [
     { name = "openapi-python-client", specifier = "==0.28.4" },
     { name = "pytest", specifier = ">=8.0.0" },
     { name = "respx", specifier = ">=0.22.0" },
+    { name = "ruff", specifier = ">=0.8.0" },
 ]
 
 [[package]]

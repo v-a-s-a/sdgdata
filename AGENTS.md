@@ -17,6 +17,22 @@ Tests use `pytest`. The default test suite is deterministic and mocks the UNSD
 API with `respx` using live-derived JSON fixtures committed under
 `tests/fixtures/unsd_api/`.
 
+### Linting and Formatting
+
+This project uses Ruff for linting, import sorting, and code formatting.
+
+Fix lint and formatting issues before committing:
+```bash
+uv run ruff check . --fix
+uv run ruff format .
+```
+
+Check lint and formatting without mutating files:
+```bash
+uv run ruff check .
+uv run ruff format --check .
+```
+
 #### Running Default Tests
 Run the default test suite with mocked UNSD API responses:
 ```bash
@@ -75,10 +91,12 @@ manual workflow runs.
 The default CI workflow:
 1. Sets up Python 3.12 and `uv`.
 2. Installs dependencies with `uv sync --locked --all-groups`.
-3. Runs `uv run python scripts/generate_models.py --check`.
-4. Runs `uv run pytest -m mock`.
-5. Builds release artifacts with `uv build`.
-6. Uploads the `dist/` wheel and source distribution as the `pyunsdg-dist`
+3. Runs `uv run ruff check .`.
+4. Runs `uv run ruff format --check .`.
+5. Runs `uv run python scripts/generate_models.py --check`.
+6. Runs `uv run pytest -m mock`.
+7. Builds release artifacts with `uv build`.
+8. Uploads the `dist/` wheel and source distribution as the `pyunsdg-dist`
    workflow artifact.
 
 The live UNSD API smoke test is manual-only in GitHub Actions. Trigger the CI

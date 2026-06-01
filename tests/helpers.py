@@ -2,7 +2,6 @@ import json
 from pathlib import Path
 from typing import Any
 
-
 FIXTURE_DIR = Path(__file__).parent / "fixtures" / "unsd_api"
 TARGET_CODE = "3.8"
 SERIES_CODE = "SH_OOP_XPD_EARNNET40"

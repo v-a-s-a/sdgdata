@@ -4,7 +4,6 @@ from typing import Any
 
 import httpx
 
-
 BASE_URL = "https://unstats.un.org/sdgapi/v1"
 FIXTURE_DIR = Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "unsd_api"
 TARGET_CODE = "3.8"
@@ -13,9 +12,7 @@ SERIES_CODE = "SH_OOP_XPD_EARNNET40"
 AREA_CODE = "4"
 
 
-def fetch_json(
-    client: httpx.Client, path: str, params: dict[str, Any] | None = None
-) -> Any:
+def fetch_json(client: httpx.Client, path: str, params: dict[str, Any] | None = None) -> Any:
     response = client.get(path, params=params)
     response.raise_for_status()
     return response.json()
@@ -41,9 +38,7 @@ def main() -> None:
         targets_without_children = fetch_json(
             client, "/sdg/Target/List", {"includechildren": False}
         )
-        targets_with_children = fetch_json(
-            client, "/sdg/Target/List", {"includechildren": True}
-        )
+        targets_with_children = fetch_json(client, "/sdg/Target/List", {"includechildren": True})
         series_data = fetch_json(
             client,
             "/sdg/Series/Data",

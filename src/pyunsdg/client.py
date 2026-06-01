@@ -1,21 +1,21 @@
 import json
 import re
 from collections.abc import Mapping, Sequence
-from typing import Literal, List, Optional
+from typing import Literal
 
 import httpx
 
-from . import debug
 from pyunsdg.models import (
-    ApiTarget, 
-    ApiObservationPage, 
-    ApiGeoArea, 
-    ApiGoal, 
-    ConceptsMasterData, 
-    SDMXMetaDataResponse,
-    ApiSerie,
     ApiDimension,
+    ApiGeoArea,
+    ApiGoal,
+    ApiSerie,
+    ApiTarget,
+    ConceptsMasterData,
+    SDMXMetaDataResponse,
 )
+
+from . import debug
 
 # standard UNSD API base URL
 BASE_URL = "https://unstats.un.org/sdgapi/v1"
@@ -25,23 +25,23 @@ DimensionFilters = Mapping[str, str | Sequence[str]]
 DimensionArgument = DimensionMode | DimensionFilters
 
 
-def _release_sort_key(release: Optional[str]) -> tuple[int, int, int]:
+def _release_sort_key(release: str | None) -> tuple[int, int, int]:
     match = _RELEASE_PATTERN.match(release or "")
     if match is None:
         return (-1, -1, -1)
     return tuple(int(part) for part in match.groups())
 
 
-def _period_value(period: Optional[str]) -> Optional[int]:
+def _period_value(period: str | None) -> int | None:
     if period is None:
         return None
     return int(period)
 
 
 def _period_query_params(
-    start_period: Optional[str],
-    end_period: Optional[str],
-) -> Optional[dict[str, str]]:
+    start_period: str | None,
+    end_period: str | None,
+) -> dict[str, str] | None:
     start = _period_value(start_period)
     end = _period_value(end_period)
     if start is None and end is None:
@@ -64,7 +64,7 @@ def _dimension_payload(dimensions: DimensionFilters) -> str:
     return json.dumps(payload, separators=(",", ":"))
 
 
-def _coarsest_dimension_filters(dimensions: List[ApiDimension]) -> dict[str, str]:
+def _coarsest_dimension_filters(dimensions: list[ApiDimension]) -> dict[str, str]:
     filters = {}
     preferred_codes = {
         "age": ["ALLAGE"],
@@ -99,11 +99,7 @@ def _coarsest_dimension_filters(dimensions: List[ApiDimension]) -> dict[str, str
 
         if selected_code is None:
             selected_code = next(
-                (
-                    code
-                    for code in dimension.codes
-                    if code.code == "_T" or code.sdmx == "_T"
-                ),
+                (code for code in dimension.codes if code.code == "_T" or code.sdmx == "_T"),
                 None,
             )
 
@@ -114,8 +110,7 @@ def _coarsest_dimension_filters(dimensions: List[ApiDimension]) -> dict[str, str
                     for code in dimension.codes
                     if code.description
                     and any(
-                        marker in code.description.lower()
-                        for marker in total_description_markers
+                        marker in code.description.lower() for marker in total_description_markers
                     )
                 ),
                 None,
@@ -152,20 +147,20 @@ class UNSDClient:
     def __init__(self):
         self.client = httpx.Client(base_url=BASE_URL, timeout=30.0)
 
-    def _get(self, url: str, *, params: Optional[dict] = None) -> httpx.Response:
+    def _get(self, url: str, *, params: dict | None = None) -> httpx.Response:
         request = self.client.build_request("GET", url, params=params)
         debug.print_query(request)
         return self.client.send(request)
 
-    def get_targets(self) -> List[ApiTarget]:
+    def get_targets(self) -> list[ApiTarget]:
         """
         Returns all targets and descriptions.
         """
         return self.get_target_list(include_children=False)
 
     def get_series_codes(
-        self, target_code: Optional[str] = None, *, all_releases: bool = False
-    ) -> List[ApiSerie]:
+        self, target_code: str | None = None, *, all_releases: bool = False
+    ) -> list[ApiSerie]:
         """
         Returns latest series codes and descriptions, optionally filtered by target code.
         """
@@ -193,13 +188,13 @@ class UNSDClient:
 
         return list(latest_by_code.values())
 
-    def get_geo_areas(self) -> List[ApiGeoArea]:
+    def get_geo_areas(self) -> list[ApiGeoArea]:
         """
         Returns a list of geographic areas and their M49 codes.
         """
         return self.get_geo_area_list()
 
-    def get_target_list(self, include_children: bool = True) -> List[ApiTarget]:
+    def get_target_list(self, include_children: bool = True) -> list[ApiTarget]:
         """
         Fetches all targets, optionally including their indicators and series.
         """
@@ -207,8 +202,8 @@ class UNSDClient:
         response.raise_for_status()
         data = response.json()
         return [ApiTarget(**item) for item in data]
-    
-    def get_goal_list(self) -> List[ApiGoal]:
+
+    def get_goal_list(self) -> list[ApiGoal]:
         """
         Fetches all SDG goals.
         """
@@ -216,8 +211,8 @@ class UNSDClient:
         response.raise_for_status()
         data = response.json()
         return [ApiGoal(**item) for item in data]
-    
-    def get_indicator_list(self, include_series: bool = True) -> List[ApiTarget]:
+
+    def get_indicator_list(self, include_series: bool = True) -> list[ApiTarget]:
         """
         Fetches all indicators, optionally including their series.
         """
@@ -225,8 +220,8 @@ class UNSDClient:
         response.raise_for_status()
         data = response.json()
         return [ApiTarget(**item) for item in data]
-    
-    def get_geo_area_list(self) -> List[ApiGeoArea]:
+
+    def get_geo_area_list(self) -> list[ApiGeoArea]:
         """
         Fetches all geographic areas.
         """
@@ -235,23 +230,23 @@ class UNSDClient:
         data = response.json()
         return [ApiGeoArea(**item) for item in data]
 
-    def get_concept_list(self) -> List[ConceptsMasterData]:
+    def get_concept_list(self) -> list[ConceptsMasterData]:
         """
-        Fetches all concepts. The API does not provide a structured model for concepts, so we return raw dicts.
+        Fetches all concepts.
         """
         response = self._get("sdg/SDMXMetadata/GetConceptsMasterList")
         response.raise_for_status()
         return [ConceptsMasterData(**item) for item in response.json()]
-    
-    def get_sdmx_series_list(self) -> List[SDMXMetaDataResponse]:
+
+    def get_sdmx_series_list(self) -> list[SDMXMetaDataResponse]:
         """
-        Fetches all SDMX series metadata. The API does not provide a structured model for SDMX metadata, so we return raw dicts.
+        Fetches all SDMX series metadata.
         """
         response = self._get("sdg/SDMXMetadata/GetSeries")
         response.raise_for_status()
         return response.json()
 
-    def get_series_dimensions(self, series_code: str) -> List[ApiDimension]:
+    def get_series_dimensions(self, series_code: str) -> list[ApiDimension]:
         """
         Fetches available disaggregation dimensions for a series.
         """
@@ -260,14 +255,14 @@ class UNSDClient:
         return [ApiDimension(**item) for item in response.json()]
 
     def get_series_data(
-        self, 
-        series_codes: List[str], 
-        area_code: Optional[str] = None,
-        start_period: Optional[str] = None,
-        end_period: Optional[str] = None,
-        release_code: Optional[str] = None,
+        self,
+        series_codes: list[str],
+        area_code: str | None = None,
+        start_period: str | None = None,
+        end_period: str | None = None,
+        release_code: str | None = None,
         dimensions: DimensionArgument = "coarsest",
-    ) -> List[dict]:
+    ) -> list[dict]:
         """
         Pulls actual data observations for given series codes across all pages.
         Returns a list of dictionaries, making it easy to create a Polars or Pandas DataFrame.
@@ -291,9 +286,7 @@ class UNSDClient:
                     self.get_series_dimensions(series_code)
                 )
                 if coarsest_dimensions:
-                    series_params["dimensions"] = _dimension_payload(
-                        coarsest_dimensions
-                    )
+                    series_params["dimensions"] = _dimension_payload(coarsest_dimensions)
                 all_observations.extend(self._fetch_series_data(series_params))
             return all_observations
 
@@ -305,7 +298,7 @@ class UNSDClient:
 
         return self._fetch_series_data(params)
 
-    def _fetch_series_data(self, params: dict) -> List[dict]:
+    def _fetch_series_data(self, params: dict) -> list[dict]:
         params = {**params, "page": 1}
         all_observations = []
 
@@ -313,7 +306,7 @@ class UNSDClient:
             # /sdg/Series/Data is often more direct than generic Observation for this
             response = self._get("/sdg/Series/Data", params=params)
             response.raise_for_status()
-            
+
             page_data = response.json()
             observations = page_data.get("data", [])
             all_observations.extend(observations)
@@ -325,7 +318,7 @@ class UNSDClient:
             # UNSD may omit totalPages, so fall back to response size.
             if not observations or len(observations) < params.get("pageSize", 100):
                 break
-                
+
             params["page"] += 1
 
         return all_observations

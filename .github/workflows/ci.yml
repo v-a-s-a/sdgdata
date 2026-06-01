@@ -46,6 +46,12 @@ jobs:
       - name: Install dependencies
         run: uv sync --locked --all-groups
 
+      - name: Run Ruff lint checks
+        run: uv run ruff check .
+
+      - name: Run Ruff format check
+        run: uv run ruff format --check .
+
       - name: Check generated models
         run: uv run python scripts/generate_models.py --check
 

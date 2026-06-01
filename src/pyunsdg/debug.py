@@ -2,7 +2,6 @@ import sys
 
 import httpx
 
-
 _enabled = False
 
 

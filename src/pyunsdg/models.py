@@ -4,308 +4,371 @@
 from __future__ import annotations
 
 from datetime import datetime
-from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
 
 class ApiDisaggregatedDimenions(BaseModel):
-    id: Optional[str] = None
-    goal: Optional[int] = None
-    target: Optional[str] = None
-    indicator: Optional[str] = None
-    seriesCode: Optional[str] = None
-    disaggregatedCategory: Optional[str] = None
+    id: str | None = None
+    goal: int | None = None
+    target: str | None = None
+    indicator: str | None = None
+    seriesCode: str | None = None
+    disaggregatedCategory: str | None = None
+
 
 class ApiOneSeriesMultiArea(BaseModel):
-    indicator: Optional[str] = None
-    seriesCode: Optional[str] = None
-    seriesTitle: Optional[str] = None
-    disaggregationType: Optional[str] = None
-    units: Optional[str] = None
-    countryData: Optional[List[ApiCountrywiseData]] = None
+    indicator: str | None = None
+    seriesCode: str | None = None
+    seriesTitle: str | None = None
+    disaggregationType: str | None = None
+    units: str | None = None
+    countryData: list[ApiCountrywiseData] | None = None
+
 
 class ApiCountrywiseData(BaseModel):
-    geoAreaCode: Optional[str] = None
-    geoAreaName: Optional[str] = None
-    chartColor: Optional[str] = None
-    yearWiseData: Optional[List[ApiYearWiseData]] = None
+    geoAreaCode: str | None = None
+    geoAreaName: str | None = None
+    chartColor: str | None = None
+    yearWiseData: list[ApiYearWiseData] | None = None
+
 
 class ApiYearWiseData(BaseModel):
-    year: Optional[str] = None
-    value: Optional[str] = None
+    year: str | None = None
+    value: str | None = None
+
 
 class ApiMultiSeriesOneArea(BaseModel):
-    geoAreaCode: Optional[str] = None
-    geoAreaName: Optional[str] = None
-    ctSeriesWiseData: Optional[List[ApiSeriesData]] = None
+    geoAreaCode: str | None = None
+    geoAreaName: str | None = None
+    ctSeriesWiseData: list[ApiSeriesData] | None = None
+
 
 class ApiSeriesData(BaseModel):
-    indicator: Optional[str] = None
-    seriesCode: Optional[str] = None
-    seriesTitle: Optional[str] = None
-    disaggregationType: Optional[str] = None
-    units: Optional[str] = None
-    chartColor: Optional[str] = None
-    yearWiseData: Optional[List[ApiYearWiseData]] = None
+    indicator: str | None = None
+    seriesCode: str | None = None
+    seriesTitle: str | None = None
+    disaggregationType: str | None = None
+    units: str | None = None
+    chartColor: str | None = None
+    yearWiseData: list[ApiYearWiseData] | None = None
+
 
 class ApiCompareIndicatorsAcrossCountries(BaseModel):
-    goalId: Optional[str] = None
-    goalName: Optional[str] = None
-    indicators: Optional[List[ApiIndicatorPercentage]] = None
+    goalId: str | None = None
+    goalName: str | None = None
+    indicators: list[ApiIndicatorPercentage] | None = None
+
 
 class ApiIndicatorPercentage(BaseModel):
-    code: Optional[str] = None
-    description: Optional[str] = None
-    percentage: Optional[str] = None
+    code: str | None = None
+    description: str | None = None
+    percentage: str | None = None
+
 
 class ApiCountriesAcrossAllGoals(BaseModel):
-    goals: Optional[List[SDGGoals]] = None
-    goalsCountryDetails: Optional[List[GoalsCountrywiseData]] = None
+    goals: list[SDGGoals] | None = None
+    goalsCountryDetails: list[GoalsCountrywiseData] | None = None
+
 
 class SDGGoals(BaseModel):
-    goalId: Optional[int] = None
-    goalName: Optional[str] = None
+    goalId: int | None = None
+    goalName: str | None = None
+
 
 class GoalsCountrywiseData(BaseModel):
-    geoAreaCode: Optional[int] = None
-    geoAreaName: Optional[str] = None
-    goal1: Optional[float] = None
-    goal2: Optional[float] = None
-    goal3: Optional[float] = None
-    goal4: Optional[float] = None
-    goal5: Optional[float] = None
-    goal6: Optional[float] = None
-    goal7: Optional[float] = None
-    goal8: Optional[float] = None
-    goal9: Optional[float] = None
-    goal10: Optional[float] = None
-    goal11: Optional[float] = None
-    goal12: Optional[float] = None
-    goal13: Optional[float] = None
-    goal14: Optional[float] = None
-    goal15: Optional[float] = None
-    goal16: Optional[float] = None
-    goal17: Optional[float] = None
+    geoAreaCode: int | None = None
+    geoAreaName: str | None = None
+    goal1: float | None = None
+    goal2: float | None = None
+    goal3: float | None = None
+    goal4: float | None = None
+    goal5: float | None = None
+    goal6: float | None = None
+    goal7: float | None = None
+    goal8: float | None = None
+    goal9: float | None = None
+    goal10: float | None = None
+    goal11: float | None = None
+    goal12: float | None = None
+    goal13: float | None = None
+    goal14: float | None = None
+    goal15: float | None = None
+    goal16: float | None = None
+    goal17: float | None = None
+
 
 class ApiGeoArea(BaseModel):
-    geoAreaCode: Optional[str] = Field(None, description='geoAreaCode is equivalent to M49')
-    geoAreaName: Optional[str] = Field(None, description='geoArea Name is the offician UN name for that country or region.')
+    geoAreaCode: str | None = Field(None, description="geoAreaCode is equivalent to M49")
+    geoAreaName: str | None = Field(
+        None, description="geoArea Name is the offician UN name for that country or region."
+    )
+
 
 class ApiGeoTree(BaseModel):
-    geoAreaCode: Optional[int] = Field(None, description='Gets or Sets code')
-    geoAreaName: Optional[str] = Field(None, description='Gets or Sets name')
-    type: Optional[str] = Field(None, description='Gets or Sets type')
-    children: Optional[List[ApiGeoTree]] = Field(None, description='Gets or Sets children')
+    geoAreaCode: int | None = Field(None, description="Gets or Sets code")
+    geoAreaName: str | None = Field(None, description="Gets or Sets name")
+    type: str | None = Field(None, description="Gets or Sets type")
+    children: list[ApiGeoTree] | None = Field(None, description="Gets or Sets children")
+
 
 class ApiGoalData(BaseModel):
-    code: Optional[str] = Field(None, description='Gets or Sets Code')
-    title: Optional[str] = Field(None, description='Gets or Sets Title')
-    description: Optional[str] = Field(None, description='Gets or Sets Description')
-    uri: Optional[str] = Field(None, description='Gets or Sets URI')
-    targets: Optional[List[ApiTargetData]] = Field(None, description='Gets or Sets Targets')
+    code: str | None = Field(None, description="Gets or Sets Code")
+    title: str | None = Field(None, description="Gets or Sets Title")
+    description: str | None = Field(None, description="Gets or Sets Description")
+    uri: str | None = Field(None, description="Gets or Sets URI")
+    targets: list[ApiTargetData] | None = Field(None, description="Gets or Sets Targets")
+
 
 class ApiTargetData(BaseModel):
-    code: Optional[str] = Field(None, description='Gets or Sets Code')
-    title: Optional[str] = Field(None, description='Gets or Sets Title')
-    description: Optional[str] = Field(None, description='Gets or Sets Description')
-    URI: Optional[str] = Field(None, description='Gets or Sets URI')
-    indicators: Optional[List[ApiIndicatorData]] = Field(None, description='Gets or Sets Indicators')
+    code: str | None = Field(None, description="Gets or Sets Code")
+    title: str | None = Field(None, description="Gets or Sets Title")
+    description: str | None = Field(None, description="Gets or Sets Description")
+    URI: str | None = Field(None, description="Gets or Sets URI")
+    indicators: list[ApiIndicatorData] | None = Field(None, description="Gets or Sets Indicators")
+
 
 class ApiIndicatorData(BaseModel):
-    code: Optional[str] = Field(None, description='Gets or Sets Code')
-    description: Optional[str] = Field(None, description='Gets or Sets Description')
-    tier: Optional[str] = Field(None, description='Gets or Sets Tier')
-    uri: Optional[str] = Field(None, description='Gets or Sets URI')
-    series: Optional[List[ApiSerieData]] = Field(None, description='Gets or Sets Series')
+    code: str | None = Field(None, description="Gets or Sets Code")
+    description: str | None = Field(None, description="Gets or Sets Description")
+    tier: str | None = Field(None, description="Gets or Sets Tier")
+    uri: str | None = Field(None, description="Gets or Sets URI")
+    series: list[ApiSerieData] | None = Field(None, description="Gets or Sets Series")
+
 
 class ApiSerieData(BaseModel):
-    release: Optional[str] = Field(None, description='Gets or Sets Series')
-    code: Optional[str] = None
-    description: Optional[str] = Field(None, description='Gets or Sets Description')
-    uri: Optional[str] = Field(None, description='Gets or Sets URI')
-    observations: Optional[List[ApiObservation]] = Field(None, description='Gets or Sets attributes')
+    release: str | None = Field(None, description="Gets or Sets Series")
+    code: str | None = None
+    description: str | None = Field(None, description="Gets or Sets Description")
+    uri: str | None = Field(None, description="Gets or Sets URI")
+    observations: list[ApiObservation] | None = Field(None, description="Gets or Sets attributes")
+
 
 class ApiObservation(BaseModel):
-    goal: Optional[List[str]] = Field(None, description='Gets or Sets Goal')
-    target: Optional[List[str]] = Field(None, description='Gets or Sets Target')
-    indicator: Optional[List[str]] = Field(None, description='Gets or Sets Indicator')
-    series: Optional[str] = Field(None, description='Gets or Sets Series')
-    seriesDescription: Optional[str] = Field(None, description='Gets or Sets Series Description')
-    seriesCount: Optional[str] = Field(None, description='Gets or Sets Series Count')
-    geoAreaCode: Optional[str] = Field(None, description='Gets or Sets geoAreaCode')
-    geoAreaName: Optional[str] = Field(None, description='Gets or Sets geoAreaName')
-    timePeriodStart: Optional[float] = Field(None, description='Gets or Sets timePeriod Start')
-    value: Optional[str] = Field(None, description='Gets or Sets Value')
-    valueType: Optional[str] = Field(None, description='Gets or Sets ValueType')
-    time_detail: Optional[str] = Field(None, description='Gets or Sets TimeDetail')
-    timeCoverage: Optional[str] = Field(None, description='Gets or Sets TimeCoverage')
-    upperBound: Optional[str] = Field(None, description='Gets or Sets UpperBound')
-    lowerBound: Optional[str] = Field(None, description='Gets or Sets LowerBound')
-    basePeriod: Optional[str] = Field(None, description='Gets or Sets BasePeriod')
-    source: Optional[str] = Field(None, description='Gets or Sets Source')
-    geoInfoUrl: Optional[str] = Field(None, description='Gets or Sets GeoInfoUrl')
-    footnotes: Optional[List[str]] = Field(None, description='Gets or Sets Footnotes')
-    attributes: Optional[Dict[str, str]] = Field(None, description='Gets or Sets Attributes')
-    dimensions: Optional[Dict[str, str]] = Field(None, description='Gets or Sets Dimensions')
+    goal: list[str] | None = Field(None, description="Gets or Sets Goal")
+    target: list[str] | None = Field(None, description="Gets or Sets Target")
+    indicator: list[str] | None = Field(None, description="Gets or Sets Indicator")
+    series: str | None = Field(None, description="Gets or Sets Series")
+    seriesDescription: str | None = Field(None, description="Gets or Sets Series Description")
+    seriesCount: str | None = Field(None, description="Gets or Sets Series Count")
+    geoAreaCode: str | None = Field(None, description="Gets or Sets geoAreaCode")
+    geoAreaName: str | None = Field(None, description="Gets or Sets geoAreaName")
+    timePeriodStart: float | None = Field(None, description="Gets or Sets timePeriod Start")
+    value: str | None = Field(None, description="Gets or Sets Value")
+    valueType: str | None = Field(None, description="Gets or Sets ValueType")
+    time_detail: str | None = Field(None, description="Gets or Sets TimeDetail")
+    timeCoverage: str | None = Field(None, description="Gets or Sets TimeCoverage")
+    upperBound: str | None = Field(None, description="Gets or Sets UpperBound")
+    lowerBound: str | None = Field(None, description="Gets or Sets LowerBound")
+    basePeriod: str | None = Field(None, description="Gets or Sets BasePeriod")
+    source: str | None = Field(None, description="Gets or Sets Source")
+    geoInfoUrl: str | None = Field(None, description="Gets or Sets GeoInfoUrl")
+    footnotes: list[str] | None = Field(None, description="Gets or Sets Footnotes")
+    attributes: dict[str, str] | None = Field(None, description="Gets or Sets Attributes")
+    dimensions: dict[str, str] | None = Field(None, description="Gets or Sets Dimensions")
+
 
 class ApiGoal(BaseModel):
-    code: Optional[str] = Field(None, description='Gets or Sets Code')
-    title: Optional[str] = Field(None, description='Gets or Sets Title')
-    description: Optional[str] = Field(None, description='Gets or Sets Description')
-    uri: Optional[str] = Field(None, description='Gets or Sets URI')
-    targets: Optional[List[ApiTarget]] = Field(None, description='Gets or Sets Targets')
+    code: str | None = Field(None, description="Gets or Sets Code")
+    title: str | None = Field(None, description="Gets or Sets Title")
+    description: str | None = Field(None, description="Gets or Sets Description")
+    uri: str | None = Field(None, description="Gets or Sets URI")
+    targets: list[ApiTarget] | None = Field(None, description="Gets or Sets Targets")
+
 
 class ApiTarget(BaseModel):
-    goal: Optional[str] = Field(None, description='Gets or Sets Code')
-    code: Optional[str] = Field(None, description='Gets or Sets Code')
-    title: Optional[str] = Field(None, description='Gets or Sets Title')
-    description: Optional[str] = Field(None, description='Gets or Sets Description')
-    uri: Optional[str] = Field(None, description='Gets or Sets URI')
-    indicators: Optional[List[ApiIndicator]] = Field(None, description='Gets or Sets Indicators')
+    goal: str | None = Field(None, description="Gets or Sets Code")
+    code: str | None = Field(None, description="Gets or Sets Code")
+    title: str | None = Field(None, description="Gets or Sets Title")
+    description: str | None = Field(None, description="Gets or Sets Description")
+    uri: str | None = Field(None, description="Gets or Sets URI")
+    indicators: list[ApiIndicator] | None = Field(None, description="Gets or Sets Indicators")
+
 
 class ApiIndicator(BaseModel):
-    goal: Optional[str] = Field(None, description='Gets or Sets Goal')
-    target: Optional[str] = Field(None, description='Gets or Sets Code')
-    code: Optional[str] = Field(None, description='Gets or Sets Code')
-    description: Optional[str] = Field(None, description='Gets or Sets Description')
-    tier: Optional[str] = Field(None, description='Gets or Sets Tier')
-    uri: Optional[str] = Field(None, description='Gets or Sets URI')
-    series: Optional[List[ApiSerie]] = Field(None, description='Gets or Sets Series')
+    goal: str | None = Field(None, description="Gets or Sets Goal")
+    target: str | None = Field(None, description="Gets or Sets Code")
+    code: str | None = Field(None, description="Gets or Sets Code")
+    description: str | None = Field(None, description="Gets or Sets Description")
+    tier: str | None = Field(None, description="Gets or Sets Tier")
+    uri: str | None = Field(None, description="Gets or Sets URI")
+    series: list[ApiSerie] | None = Field(None, description="Gets or Sets Series")
+
 
 class ApiSerie(BaseModel):
-    goal: Optional[List[str]] = Field(None, description='Gets or Sets Goal')
-    target: Optional[List[str]] = Field(None, description='Gets or Sets Target')
-    indicator: Optional[List[str]] = Field(None, description='Gets or Sets Indicator')
-    release: Optional[str] = Field(None, description='Gets or Sets Release')
-    code: Optional[str] = Field(None, description='Gets or Sets Code')
-    description: Optional[str] = Field(None, description='Gets or Sets Description')
-    uri: Optional[str] = Field(None, description='Gets or Sets URI')
+    goal: list[str] | None = Field(None, description="Gets or Sets Goal")
+    target: list[str] | None = Field(None, description="Gets or Sets Target")
+    indicator: list[str] | None = Field(None, description="Gets or Sets Indicator")
+    release: str | None = Field(None, description="Gets or Sets Release")
+    code: str | None = Field(None, description="Gets or Sets Code")
+    description: str | None = Field(None, description="Gets or Sets Description")
+    uri: str | None = Field(None, description="Gets or Sets URI")
+
 
 class ApiDimension(BaseModel):
-    id: Optional[str] = Field(None, description='Gets or Sets id')
-    codes: Optional[List[ApiCodeList]] = Field(None, description='Gets or Sets codeList')
+    id: str | None = Field(None, description="Gets or Sets id")
+    codes: list[ApiCodeList] | None = Field(None, description="Gets or Sets codeList")
+
 
 class ApiCodeList(BaseModel):
-    code: Optional[str] = Field(None, description='Gets or Sets code')
-    description: Optional[str] = Field(None, description='Gets or Sets code')
-    sdmx: Optional[str] = Field(None, description='Gets or Sets code')
+    code: str | None = Field(None, description="Gets or Sets code")
+    description: str | None = Field(None, description="Gets or Sets code")
+    sdmx: str | None = Field(None, description="Gets or Sets code")
+
 
 class ApiObservationPage(BaseModel):
-    size: Optional[int] = Field(None, description='Gets or Sets Size\r\nThe number of elements in the page')
-    totalElements: Optional[int] = Field(None, description='Gets or Sets TotalElements\r\nThe total number of elements')
-    totalPages: Optional[int] = Field(None, description='Gets or Sets totalPages\r\nThe total number of pages')
-    pageNumber: Optional[int] = Field(None, description='Gets or Sets pageNumber\r\nThe current page number')
-    attributes: Optional[List[ApiDimension]] = Field(None, description='Gets or Sets attributes')
-    dimensions: Optional[List[ApiDimension]] = Field(None, description='Gets or Sets dimensions')
-    data: Optional[List[ApiObservation]] = Field(None, description='Gets or Sets data')
+    size: int | None = Field(
+        None, description="Gets or Sets Size\r\nThe number of elements in the page"
+    )
+    totalElements: int | None = Field(
+        None, description="Gets or Sets TotalElements\r\nThe total number of elements"
+    )
+    totalPages: int | None = Field(
+        None, description="Gets or Sets totalPages\r\nThe total number of pages"
+    )
+    pageNumber: int | None = Field(
+        None, description="Gets or Sets pageNumber\r\nThe current page number"
+    )
+    attributes: list[ApiDimension] | None = Field(None, description="Gets or Sets attributes")
+    dimensions: list[ApiDimension] | None = Field(None, description="Gets or Sets dimensions")
+    data: list[ApiObservation] | None = Field(None, description="Gets or Sets data")
+
 
 class FileStreamResult(BaseModel):
-    fileStream: Optional[Stream] = None
-    contentType: Optional[str] = None
-    fileDownloadName: Optional[str] = None
-    lastModified: Optional[datetime] = None
-    entityTag: Optional[EntityTagHeaderValue] = None
+    fileStream: Stream | None = None
+    contentType: str | None = None
+    fileDownloadName: str | None = None
+    lastModified: datetime | None = None
+    entityTag: EntityTagHeaderValue | None = None
+
 
 class Stream(BaseModel):
-    canRead: Optional[bool] = None
-    canSeek: Optional[bool] = None
-    canTimeout: Optional[bool] = None
-    canWrite: Optional[bool] = None
-    length: Optional[int] = None
-    position: Optional[int] = None
-    readTimeout: Optional[int] = None
-    writeTimeout: Optional[int] = None
+    canRead: bool | None = None
+    canSeek: bool | None = None
+    canTimeout: bool | None = None
+    canWrite: bool | None = None
+    length: int | None = None
+    position: int | None = None
+    readTimeout: int | None = None
+    writeTimeout: int | None = None
+
 
 class EntityTagHeaderValue(BaseModel):
-    tag: Optional[StringSegment] = None
-    isWeak: Optional[bool] = None
+    tag: StringSegment | None = None
+    isWeak: bool | None = None
+
 
 class StringSegment(BaseModel):
-    buffer: Optional[str] = None
-    offset: Optional[int] = None
-    length: Optional[int] = None
-    value: Optional[str] = None
-    hasValue: Optional[bool] = None
+    buffer: str | None = None
+    offset: int | None = None
+    length: int | None = None
+    value: str | None = None
+    hasValue: bool | None = None
+
 
 class ApiObservationPivotPage(BaseModel):
-    size: Optional[int] = Field(None, description='Gets or Sets Size\r\nThe number of elements in the page')
-    totalElements: Optional[int] = Field(None, description='Gets or Sets TotalElements\r\nThe total number of elements')
-    totalPages: Optional[int] = Field(None, description='Gets or Sets totalPages\r\nThe total number of pages')
-    pageNumber: Optional[int] = Field(None, description='Gets or Sets pageNumber\r\nThe current page number')
-    attributes: Optional[List[ApiDimension]] = Field(None, description='Gets or Sets attributes')
-    dimensions: Optional[List[ApiDimension]] = Field(None, description='Gets or Sets dimensions')
-    data: Optional[List[ApiObservationPivot]] = Field(None, description='Gets or Sets data')
+    size: int | None = Field(
+        None, description="Gets or Sets Size\r\nThe number of elements in the page"
+    )
+    totalElements: int | None = Field(
+        None, description="Gets or Sets TotalElements\r\nThe total number of elements"
+    )
+    totalPages: int | None = Field(
+        None, description="Gets or Sets totalPages\r\nThe total number of pages"
+    )
+    pageNumber: int | None = Field(
+        None, description="Gets or Sets pageNumber\r\nThe current page number"
+    )
+    attributes: list[ApiDimension] | None = Field(None, description="Gets or Sets attributes")
+    dimensions: list[ApiDimension] | None = Field(None, description="Gets or Sets dimensions")
+    data: list[ApiObservationPivot] | None = Field(None, description="Gets or Sets data")
+
 
 class ApiObservationPivot(BaseModel):
-    goal: Optional[str] = Field(None, description='Gets or Sets Goal')
-    target: Optional[str] = Field(None, description='Gets or Sets Target')
-    indicator: Optional[str] = Field(None, description='Gets or Sets Indicator')
-    series: Optional[str] = Field(None, description='Gets or Sets Series')
-    seriesDescription: Optional[str] = Field(None, description='Gets or Sets Series')
-    seriesCount: Optional[str] = Field(None, description='Gets or Sets Series')
-    geoAreaCode: Optional[str] = Field(None, description='Gets or Sets geoAreaCode')
-    geoAreaName: Optional[str] = Field(None, description='Gets or Sets geoAreaName')
-    timeCoverage: Optional[str] = Field(None, description='Gets or Sets TimeCoverage')
-    upperBound: Optional[str] = Field(None, description='Gets or Sets UpperBound')
-    lowerBound: Optional[str] = Field(None, description='Gets or Sets LowerBound')
-    basePeriod: Optional[str] = Field(None, description='Gets or Sets BasePeriod')
-    source: Optional[str] = Field(None, description='Gets or Sets Source')
-    geoInfoUrl: Optional[str] = Field(None, description='Gets or Sets GeoInfoUrl')
-    age: Optional[str] = Field(None, description='Gets or Sets age')
-    freq: Optional[str] = Field(None, description='Gets or Sets freq')
-    sex: Optional[str] = Field(None, description='Gets or Sets sex')
-    location: Optional[str] = Field(None, description='Gets or Sets location')
-    units: Optional[str] = Field(None, description='Gets or Sets Units')
-    level_status: Optional[str] = Field(None, description='Gets or Sets level/status')
-    name_of_international_agreement: Optional[str] = Field(None, description='Gets or Sets name of international agreement')
-    education_level: Optional[str] = Field(None, description='Gets or Sets education level')
-    type_of_product: Optional[str] = Field(None, description='Gets or Sets type of product')
-    type_of_facilities: Optional[str] = Field(None, description='Gets or Sets type of facilities')
-    name_of_international_institution: Optional[str] = Field(None, description='Gets or Sets name of international institution')
-    type_of_occupation: Optional[str] = Field(None, description='Gets or Sets type of occupation')
-    tariff_regime_status: Optional[str] = Field(None, description='Gets or Sets tariff regime status')
-    mode_of_transportation: Optional[str] = Field(None, description='Gets or Sets mode of transportation')
-    type_of_mobile_technology: Optional[str] = Field(None, description='Gets or Sets type of mobile technology')
-    name_of_non_communicable_disease: Optional[str] = Field(None, description='Gets or Sets name of non-communicable disease')
-    type_of_skill: Optional[str] = Field(None, description='Gets or Sets type of skill')
-    type_of_speed: Optional[str] = Field(None, description='Gets or Sets type of speed')
-    migratory_status: Optional[str] = Field(None, description='Gets or Sets migratory status')
-    disability_status: Optional[str] = Field(None, description='Gets or Sets disability status')
-    hazard_type: Optional[str] = Field(None, description='Gets or Sets hazard type')
-    ihr_capacity: Optional[str] = Field(None, description='Gets or Sets ihr capacity')
-    reporting_type: Optional[str] = Field(None, description='Gets or Sets Units')
-    cities: Optional[str] = Field(None, description='Gets or Sets cities')
-    activity: Optional[str] = Field(None, description='Gets or Sets Activity')
-    policy_domains: Optional[str] = Field(None, description='Gets or Sets Policy Domains')
-    years: Optional[str] = Field(None, description='Gets or Sets years')
+    goal: str | None = Field(None, description="Gets or Sets Goal")
+    target: str | None = Field(None, description="Gets or Sets Target")
+    indicator: str | None = Field(None, description="Gets or Sets Indicator")
+    series: str | None = Field(None, description="Gets or Sets Series")
+    seriesDescription: str | None = Field(None, description="Gets or Sets Series")
+    seriesCount: str | None = Field(None, description="Gets or Sets Series")
+    geoAreaCode: str | None = Field(None, description="Gets or Sets geoAreaCode")
+    geoAreaName: str | None = Field(None, description="Gets or Sets geoAreaName")
+    timeCoverage: str | None = Field(None, description="Gets or Sets TimeCoverage")
+    upperBound: str | None = Field(None, description="Gets or Sets UpperBound")
+    lowerBound: str | None = Field(None, description="Gets or Sets LowerBound")
+    basePeriod: str | None = Field(None, description="Gets or Sets BasePeriod")
+    source: str | None = Field(None, description="Gets or Sets Source")
+    geoInfoUrl: str | None = Field(None, description="Gets or Sets GeoInfoUrl")
+    age: str | None = Field(None, description="Gets or Sets age")
+    freq: str | None = Field(None, description="Gets or Sets freq")
+    sex: str | None = Field(None, description="Gets or Sets sex")
+    location: str | None = Field(None, description="Gets or Sets location")
+    units: str | None = Field(None, description="Gets or Sets Units")
+    level_status: str | None = Field(None, description="Gets or Sets level/status")
+    name_of_international_agreement: str | None = Field(
+        None, description="Gets or Sets name of international agreement"
+    )
+    education_level: str | None = Field(None, description="Gets or Sets education level")
+    type_of_product: str | None = Field(None, description="Gets or Sets type of product")
+    type_of_facilities: str | None = Field(None, description="Gets or Sets type of facilities")
+    name_of_international_institution: str | None = Field(
+        None, description="Gets or Sets name of international institution"
+    )
+    type_of_occupation: str | None = Field(None, description="Gets or Sets type of occupation")
+    tariff_regime_status: str | None = Field(None, description="Gets or Sets tariff regime status")
+    mode_of_transportation: str | None = Field(
+        None, description="Gets or Sets mode of transportation"
+    )
+    type_of_mobile_technology: str | None = Field(
+        None, description="Gets or Sets type of mobile technology"
+    )
+    name_of_non_communicable_disease: str | None = Field(
+        None, description="Gets or Sets name of non-communicable disease"
+    )
+    type_of_skill: str | None = Field(None, description="Gets or Sets type of skill")
+    type_of_speed: str | None = Field(None, description="Gets or Sets type of speed")
+    migratory_status: str | None = Field(None, description="Gets or Sets migratory status")
+    disability_status: str | None = Field(None, description="Gets or Sets disability status")
+    hazard_type: str | None = Field(None, description="Gets or Sets hazard type")
+    ihr_capacity: str | None = Field(None, description="Gets or Sets ihr capacity")
+    reporting_type: str | None = Field(None, description="Gets or Sets Units")
+    cities: str | None = Field(None, description="Gets or Sets cities")
+    activity: str | None = Field(None, description="Gets or Sets Activity")
+    policy_domains: str | None = Field(None, description="Gets or Sets Policy Domains")
+    years: str | None = Field(None, description="Gets or Sets years")
+
 
 class SDMXMetaDataResponse(BaseModel):
-    series: Optional[str] = None
-    seriesDesc: Optional[str] = None
-    indicatorDesc: Optional[str] = None
-    conceptId: Optional[str] = None
-    conceptName: Optional[str] = None
-    conceptDesc: Optional[str] = None
-    conceptHTML: Optional[str] = None
-    parentId: Optional[str] = None
+    series: str | None = None
+    seriesDesc: str | None = None
+    indicatorDesc: str | None = None
+    conceptId: str | None = None
+    conceptName: str | None = None
+    conceptDesc: str | None = None
+    conceptHTML: str | None = None
+    parentId: str | None = None
+
 
 class ConceptsMasterData(BaseModel):
-    conceptId: Optional[str] = None
-    conceptName: Optional[str] = None
-    parentId: Optional[str] = None
+    conceptId: str | None = None
+    conceptName: str | None = None
+    parentId: str | None = None
+
 
 class ApiSliceData(BaseModel):
-    series: Optional[str] = Field(None, description='Gets or Sets Series')
-    geoAreaCode: Optional[int] = Field(None, description='Gets or Sets geoAreaCode')
-    geoAreaName: Optional[str] = Field(None, description='Gets or Sets geoAreaName')
-    dimensions: Optional[List[Dict[str, str]]] = Field(None, description='Gets or Sets Dimensions for slice data')
+    series: str | None = Field(None, description="Gets or Sets Series")
+    geoAreaCode: int | None = Field(None, description="Gets or Sets geoAreaCode")
+    geoAreaName: str | None = Field(None, description="Gets or Sets geoAreaName")
+    dimensions: list[dict[str, str]] | None = Field(
+        None, description="Gets or Sets Dimensions for slice data"
+    )
+
 
 class FileResult(BaseModel):
-    contentType: Optional[str] = None
-    fileDownloadName: Optional[str] = None
-    lastModified: Optional[datetime] = None
-    entityTag: Optional[EntityTagHeaderValue] = None
+    contentType: str | None = None
+    fileDownloadName: str | None = None
+    lastModified: datetime | None = None
+    entityTag: EntityTagHeaderValue | None = None
 
 
 ApiGeoTree.model_rebuild()

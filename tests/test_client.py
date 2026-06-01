@@ -9,7 +9,6 @@ from pyunsdg.client import BASE_URL, _release_sort_key
 from pyunsdg.models import ApiDimension, ApiGeoArea, ApiSerie, ApiTarget
 from tests.helpers import AREA_CODE, SERIES_CODE, TARGET_CODE, load_fixture
 
-
 pytestmark = pytest.mark.mock
 
 
@@ -36,9 +35,7 @@ def test_get_geo_areas_returns_live_derived_pydantic_models():
 @respx.mock
 def test_debug_output_is_disabled_by_default(capsys):
     fixture = load_fixture("geo_area_list.json")
-    respx.get(f"{BASE_URL}/sdg/GeoArea/List").mock(
-        return_value=httpx.Response(200, json=fixture)
-    )
+    respx.get(f"{BASE_URL}/sdg/GeoArea/List").mock(return_value=httpx.Response(200, json=fixture))
 
     UNSDClient().get_geo_areas()
 
@@ -49,18 +46,14 @@ def test_debug_output_is_disabled_by_default(capsys):
 @respx.mock
 def test_debug_output_prints_constructed_query(capsys):
     fixture = load_fixture("target_list_without_children.json")
-    respx.get(f"{BASE_URL}/sdg/Target/List").mock(
-        return_value=httpx.Response(200, json=fixture)
-    )
+    respx.get(f"{BASE_URL}/sdg/Target/List").mock(return_value=httpx.Response(200, json=fixture))
 
     debug.enable()
     UNSDClient().get_targets()
 
     captured = capsys.readouterr()
     assert captured.out == ""
-    assert captured.err == (
-        f"pyunsdg query: {BASE_URL}/sdg/Target/List?includechildren=false\n"
-    )
+    assert captured.err == (f"pyunsdg query: {BASE_URL}/sdg/Target/List?includechildren=false\n")
 
 
 @respx.mock
@@ -431,6 +424,4 @@ def test_is_single_time_series_rejects_empty_or_mixed_data():
     assert not is_single_time_series([])
     assert not is_single_time_series([base_record, fixture_records[1]])
     assert not is_single_time_series([base_record, {**base_record, "geoAreaCode": "8"}])
-    assert not is_single_time_series(
-        [base_record, {**base_record, "series": "OTHER_SERIES"}]
-    )
+    assert not is_single_time_series([base_record, {**base_record, "series": "OTHER_SERIES"}])
