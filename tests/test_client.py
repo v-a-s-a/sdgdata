@@ -103,6 +103,29 @@ def _mock_series_dimensions(series_code=SERIES_CODE):
     )
 
 
+def _mock_target_list_with_children():
+    fixture = load_fixture("target_list_with_children.json")
+    route = respx.get(f"{BASE_URL}/sdg/Target/List").mock(
+        return_value=httpx.Response(200, json=fixture)
+    )
+    return fixture, route
+
+
+def _unique_series_codes_for_target(fixture, target_code=TARGET_CODE):
+    return {
+        series["code"]
+        for target in fixture
+        if target["code"] == target_code
+        for indicator in target["indicators"]
+        for series in indicator["series"]
+        if series.get("code")
+    }
+
+
+def _mock_dimensions_for_series_codes(series_codes):
+    return {series_code: _mock_series_dimensions(series_code) for series_code in series_codes}
+
+
 def _coarsest_dimension_payload():
     return [
         {"name": "Age", "values": ["ALLAGE"]},
@@ -153,6 +176,78 @@ def test_get_series_codes_can_return_all_releases():
     assert request.url.params["includechildren"] == "true"
     assert series == _target_series_fixture(fixture)
     assert len(series) > len({item.code for item in series})
+
+
+@respx.mock
+def test_get_indicator_series_returns_grouped_metadata_and_dimensions():
+    fixture, route = _mock_target_list_with_children()
+    dimension_routes = _mock_dimensions_for_series_codes({"SH_ACS_UNHC", "SH_ACS_UNHC_25"})
+
+    metadata = UNSDClient().get_indicator_series("3.8.1")
+
+    request = route.calls.last.request
+    assert request.url.params["includechildren"] == "true"
+    assert metadata.code == "3.8.1"
+    assert metadata.description == "Coverage of essential health services"
+    assert metadata.tier == "1"
+    assert metadata.uri == "/v1/sdg/Indicator/3.8.1"
+    assert [series.code for series in metadata.series] == ["SH_ACS_UNHC", "SH_ACS_UNHC_25"]
+
+    series_by_code = {series.code: series for series in metadata.series}
+    assert series_by_code["SH_ACS_UNHC"].latest_release == "2025.Q3.G.02"
+    assert series_by_code["SH_ACS_UNHC_25"].latest_release == "2026.Q1.G.01"
+    assert series_by_code["SH_ACS_UNHC"].releases[0] == "2018.Q2.G.01"
+    assert series_by_code["SH_ACS_UNHC"].releases[-1] == "2025.Q3.G.02"
+    assert series_by_code["SH_ACS_UNHC"].dimensions == [
+        ApiDimension(**item) for item in _series_dimensions_fixture()
+    ]
+    assert all(route.call_count == 1 for route in dimension_routes.values())
+
+    target = next(target for target in fixture if target["code"] == TARGET_CODE)
+    indicator = next(
+        indicator for indicator in target["indicators"] if indicator["code"] == "3.8.1"
+    )
+    assert len(series_by_code["SH_ACS_UNHC"].releases) == len(
+        {series["release"] for series in indicator["series"] if series["code"] == "SH_ACS_UNHC"}
+    )
+
+
+@respx.mock
+def test_get_target_series_returns_nested_indicator_metadata():
+    fixture, route = _mock_target_list_with_children()
+    dimension_routes = _mock_dimensions_for_series_codes(_unique_series_codes_for_target(fixture))
+
+    metadata = UNSDClient().get_target_series(TARGET_CODE)
+
+    request = route.calls.last.request
+    assert request.url.params["includechildren"] == "true"
+    assert metadata.code == TARGET_CODE
+    assert metadata.indicators
+    assert "3.8.1" in {indicator.code for indicator in metadata.indicators}
+
+    indicator_by_code = {indicator.code: indicator for indicator in metadata.indicators}
+    indicator_381 = indicator_by_code["3.8.1"]
+    assert [series.code for series in indicator_381.series] == ["SH_ACS_UNHC", "SH_ACS_UNHC_25"]
+    assert indicator_381.series[0].dimensions == [
+        ApiDimension(**item) for item in _series_dimensions_fixture()
+    ]
+    assert all(route.call_count == 1 for route in dimension_routes.values())
+
+
+@respx.mock
+def test_get_indicator_series_raises_for_unknown_indicator():
+    _mock_target_list_with_children()
+
+    with pytest.raises(ValueError, match="indicator code 'not-an-indicator' was not found"):
+        UNSDClient().get_indicator_series("not-an-indicator")
+
+
+@respx.mock
+def test_get_target_series_raises_for_unknown_target():
+    _mock_target_list_with_children()
+
+    with pytest.raises(ValueError, match="target code 'not-a-target' was not found"):
+        UNSDClient().get_target_series("not-a-target")
 
 
 @respx.mock
