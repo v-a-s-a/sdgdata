@@ -9,6 +9,7 @@ from pyunsdg.models import (
     ApiDimension,
     ApiGeoArea,
     ApiGoal,
+    ApiIndicator,
     ApiSerie,
     ApiTarget,
     ConceptsMasterData,
@@ -16,6 +17,7 @@ from pyunsdg.models import (
 )
 
 from . import debug
+from .metadata import IndicatorSeriesMetadata, SeriesMetadata, TargetSeriesMetadata
 
 # standard UNSD API base URL
 BASE_URL = "https://unstats.un.org/sdgapi/v1"
@@ -125,6 +127,56 @@ def _coarsest_dimension_filters(dimensions: list[ApiDimension]) -> dict[str, str
     return filters
 
 
+def _group_series_metadata(
+    series_items: list[ApiSerie],
+    dimensions_by_code: Mapping[str, list[ApiDimension]],
+) -> list[SeriesMetadata]:
+    """
+    Groups repeated UNSD release rows into one discovery record per series code.
+    """
+    series_by_code: dict[str, list[ApiSerie]] = {}
+    for series in series_items:
+        if series.code is None:
+            continue
+        series_by_code.setdefault(series.code, []).append(series)
+
+    grouped_series = []
+    for code, releases in series_by_code.items():
+        latest = max(releases, key=lambda item: _release_sort_key(item.release))
+        release_codes = sorted(
+            {release.release for release in releases if release.release is not None},
+            key=_release_sort_key,
+        )
+        grouped_series.append(
+            SeriesMetadata(
+                code=code,
+                description=latest.description,
+                uri=latest.uri,
+                latest_release=latest.release,
+                releases=release_codes,
+                dimensions=dimensions_by_code.get(code, []),
+            )
+        )
+
+    return sorted(grouped_series, key=lambda series: series.code)
+
+
+def _indicator_series_metadata(
+    indicator: ApiIndicator,
+    dimensions_by_code: Mapping[str, list[ApiDimension]],
+) -> IndicatorSeriesMetadata:
+    """
+    Builds the public discovery model for one generated UNSD indicator model.
+    """
+    return IndicatorSeriesMetadata(
+        code=indicator.code or "",
+        description=indicator.description,
+        tier=indicator.tier,
+        uri=indicator.uri,
+        series=_group_series_metadata(indicator.series or [], dimensions_by_code),
+    )
+
+
 def _time_series_key(record: dict) -> tuple:
     dimensions = record.get("dimensions") or {}
     return (
@@ -187,6 +239,51 @@ class UNSDClient:
                 latest_by_code[series.code] = series
 
         return list(latest_by_code.values())
+
+    def get_indicator_series(self, indicator_code: str) -> IndicatorSeriesMetadata:
+        """
+        Returns grouped series metadata and dimensions for an indicator.
+        """
+        for target in self.get_target_list(include_children=True):
+            for indicator in target.indicators or []:
+                if indicator.code == indicator_code:
+                    series_codes = {
+                        series.code for series in indicator.series or [] if series.code is not None
+                    }
+                    dimensions_by_code = {
+                        code: self.get_series_dimensions(code) for code in series_codes
+                    }
+                    return _indicator_series_metadata(indicator, dimensions_by_code)
+
+        raise ValueError(f"indicator code {indicator_code!r} was not found")
+
+    def get_target_series(self, target_code: str) -> TargetSeriesMetadata:
+        """
+        Returns grouped indicator and series metadata for a target.
+        """
+        for target in self.get_target_list(include_children=True):
+            if target.code != target_code:
+                continue
+
+            series_codes = {
+                series.code
+                for indicator in target.indicators or []
+                for series in indicator.series or []
+                if series.code is not None
+            }
+            dimensions_by_code = {code: self.get_series_dimensions(code) for code in series_codes}
+            return TargetSeriesMetadata(
+                code=target.code or "",
+                title=target.title,
+                description=target.description,
+                uri=target.uri,
+                indicators=[
+                    _indicator_series_metadata(indicator, dimensions_by_code)
+                    for indicator in target.indicators or []
+                ],
+            )
+
+        raise ValueError(f"target code {target_code!r} was not found")
 
     def get_geo_areas(self) -> list[ApiGeoArea]:
         """
