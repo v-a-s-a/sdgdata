@@ -27,6 +27,33 @@ DimensionFilters = Mapping[str, str | Sequence[str]]
 DimensionArgument = DimensionMode | DimensionFilters
 
 
+def _series_code_list(series_codes: Sequence[str]) -> list[str]:
+    if isinstance(series_codes, str | bytes):
+        raise TypeError('series_codes must be a sequence of strings, such as ["SERIES_CODE"]')
+    return list(series_codes)
+
+
+def _normalize_singleton_list(value):
+    if isinstance(value, list) and len(value) == 1:
+        return value[0]
+    return value
+
+
+def _normalize_time_period_start(value):
+    if isinstance(value, float) and value.is_integer():
+        return int(value)
+    return value
+
+
+def _normalize_observation(observation: dict) -> dict:
+    normalized = {**observation}
+    for key in ("goal", "target", "indicator"):
+        normalized[key] = _normalize_singleton_list(normalized.get(key))
+    if "timePeriodStart" in normalized:
+        normalized["timePeriodStart"] = _normalize_time_period_start(normalized["timePeriodStart"])
+    return normalized
+
+
 def _release_sort_key(release: str | None) -> tuple[int, int, int]:
     match = _RELEASE_PATTERN.match(release or "")
     if match is None:
@@ -341,7 +368,7 @@ class SDGClient:
 
     def get_series_data(
         self,
-        series_codes: list[str],
+        series_codes: Sequence[str],
         area_code: str | None = None,
         start_period: str | None = None,
         end_period: str | None = None,
@@ -352,6 +379,7 @@ class SDGClient:
         Pulls actual data observations for given series codes across all pages.
         Returns a list of dictionaries, making it easy to create a Polars or Pandas DataFrame.
         """
+        series_codes = _series_code_list(series_codes)
         params = {"pageSize": 1000}
         if area_code:
             params["areaCode"] = area_code
@@ -402,7 +430,7 @@ class SDGClient:
 
             page_data = response.json()
             observations = page_data.get("data", [])
-            all_observations.extend(observations)
+            all_observations.extend(_normalize_observation(item) for item in observations)
 
             total_pages = page_data.get("totalPages")
             if total_pages is not None and params["page"] >= int(total_pages):

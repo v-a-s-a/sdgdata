@@ -75,9 +75,12 @@ custom_slice = client.get_series_data(
 ```
 
 `get_series_data()` returns a list of dictionaries, making it straightforward
-to create a dataframe for analysis. By default, it filters to the coarsest
-available disaggregation, such as all ages, both sexes, and total groups when
-those dimension values exist.
+to create a dataframe for analysis. It normalizes singleton `goal`, `target`,
+and `indicator` arrays to strings, and integral `timePeriodStart` values to
+integers. By default, it filters to the coarsest available disaggregation, such
+as all ages, both sexes, and total groups when those dimension values exist.
+For the upstream observation field descriptions, see the
+[UNSD SDG API Swagger documentation](https://unstats.un.org/sdgapi/swagger/).
 
 ## Documentation
 

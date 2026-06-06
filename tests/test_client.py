@@ -13,6 +13,22 @@ from tests.helpers import AREA_CODE, SERIES_CODE, TARGET_CODE, load_fixture
 pytestmark = pytest.mark.mock
 
 
+def _normalized_observation(observation):
+    normalized = {**observation}
+    for key in ("goal", "target", "indicator"):
+        value = normalized.get(key)
+        if isinstance(value, list) and len(value) == 1:
+            normalized[key] = value[0]
+    value = normalized.get("timePeriodStart")
+    if isinstance(value, float) and value.is_integer():
+        normalized["timePeriodStart"] = int(value)
+    return normalized
+
+
+def _normalized_observations(observations):
+    return [_normalized_observation(observation) for observation in observations]
+
+
 @pytest.fixture(autouse=True)
 def disable_debug_output():
     debug.disable()
@@ -366,8 +382,53 @@ def test_get_series_data_uses_live_derived_response_and_query_params():
     assert json.loads(request.url.params["dimensions"]) == _coarsest_dimension_payload()
     assert request.url.params["pageSize"] == "1000"
     assert request.url.params["page"] == "1"
-    assert data == fixture["data"]
+    assert data == _normalized_observations(fixture["data"])
     assert data
+
+
+@respx.mock
+def test_get_series_data_normalizes_observation_fields():
+    fixture = load_fixture("series_data_page_1.json")
+    route = respx.get(f"{BASE_URL}/sdg/Series/Data").mock(
+        return_value=httpx.Response(200, json=fixture)
+    )
+
+    data = SDGClient().get_series_data(
+        [SERIES_CODE],
+        area_code=AREA_CODE,
+        dimensions="all",
+    )
+
+    first_observation = data[0]
+    assert route.called
+    assert first_observation["goal"] == "3"
+    assert first_observation["target"] == "3.8"
+    assert first_observation["indicator"] == "3.8.2"
+    assert first_observation["timePeriodStart"] == 2007
+
+
+@respx.mock
+def test_get_series_data_preserves_multi_item_and_empty_lists():
+    observation = {
+        "goal": ["1", "2"],
+        "target": [],
+        "indicator": ["1.4.1"],
+        "timePeriodStart": 2015.5,
+    }
+    respx.get(f"{BASE_URL}/sdg/Series/Data").mock(
+        return_value=httpx.Response(200, json={"data": [observation], "totalPages": 1})
+    )
+
+    data = SDGClient().get_series_data([SERIES_CODE], dimensions="all")
+
+    assert data == [
+        {
+            "goal": ["1", "2"],
+            "target": [],
+            "indicator": "1.4.1",
+            "timePeriodStart": 2015.5,
+        }
+    ]
 
 
 @respx.mock
@@ -385,7 +446,7 @@ def test_get_series_data_can_request_all_dimensions():
 
     request = route.calls.last.request
     assert "dimensions" not in request.url.params
-    assert data == fixture["data"]
+    assert data == _normalized_observations(fixture["data"])
 
 
 @respx.mock
@@ -406,7 +467,7 @@ def test_get_series_data_sends_custom_dimensions():
         {"name": "Age", "values": ["ALLAGE"]},
         {"name": "Sex", "values": ["BOTHSEX"]},
     ]
-    assert data == fixture["data"]
+    assert data == _normalized_observations(fixture["data"])
 
 
 @respx.mock
@@ -433,7 +494,7 @@ def test_get_series_data_sends_time_period_range():
         assert request.url.params.get_list("timePeriod") == [time_period]
         assert "timePeriodStart" not in request.url.params
         assert "timePeriodEnd" not in request.url.params
-    assert data == observations
+    assert data == _normalized_observations(observations)
 
 
 @respx.mock
@@ -484,6 +545,14 @@ def test_get_series_data_requires_start_period_with_end_period():
         match="start_period and end_period must be provided together",
     ):
         SDGClient().get_series_data([SERIES_CODE], end_period="2017")
+
+
+def test_get_series_data_rejects_bare_string_series_code():
+    with pytest.raises(
+        TypeError,
+        match=r'series_codes must be a sequence of strings, such as \["SERIES_CODE"\]',
+    ):
+        SDGClient().get_series_data(SERIES_CODE)
 
 
 @respx.mock
@@ -569,7 +638,7 @@ def test_get_series_data_fetches_coarsest_dimensions_per_series():
 
     data = SDGClient().get_series_data([SERIES_CODE, other_series_code])
 
-    assert data == [observation, other_observation]
+    assert data == _normalized_observations([observation, other_observation])
     assert route.call_count == 2
     assert route.calls[0].request.url.params["seriesCode"] == SERIES_CODE
     assert route.calls[1].request.url.params["seriesCode"] == other_series_code
