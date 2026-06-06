@@ -6,10 +6,9 @@
 [![License](https://img.shields.io/pypi/l/sdgdata.svg)](https://github.com/v-a-s-a/sdgdata/blob/main/LICENSE)
 [![Status](https://img.shields.io/pypi/status/sdgdata.svg)](https://pypi.org/project/sdgdata/)
 
-`sdgdata` is an unofficial Python client for SDG data from the UNSD SDG API.
+`sdgdata` is an unofficial Python client for retrieving SDG data from the UNSD SDG API.
 
-It provides a simple client to retrieve Sustainable Development Goal metadata
-and data from Python, with models derived from the UNSD SDG API schema.
+It provides a lightweight client to retrieve Sustainable Development Goal (SDG) data and metadata from the API hosted by the United Nations Statistics Division (UNSD). The python data models are derived from the UNSD SDG API schema.
 
 ## Installation
 
@@ -37,7 +36,7 @@ client = SDGClient()
 areas = client.get_geo_areas()
 targets = client.get_targets()
 
-# Find latest-release series codes for a target.
+# Pick a series code and country
 series = client.get_series_codes(target_code="3.8")
 series_code = series[-1].code
 area_code = areas[0].geoAreaCode
