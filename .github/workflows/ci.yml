@@ -64,7 +64,7 @@ jobs:
       - name: Upload package artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: pyunsdg-dist
+          name: sdgdata-dist
           path: dist/*
           if-no-files-found: error
 
@@ -92,5 +92,5 @@ jobs:
 
       - name: Run live smoke tests
         env:
-          PYUNSDG_LIVE_TESTS: "1"
+          SDGDATA_LIVE_TESTS: "1"
         run: uv run pytest -m live
