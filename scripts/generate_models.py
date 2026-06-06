@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate pyunsdg models from the committed OpenAPI document."""
+"""Regenerate sdgdata models from the committed OpenAPI document."""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 OPENAPI_PATH = ROOT / "data" / "un-api-openapi.json"
 COMMITTED_OPENAPI_CLIENT = ROOT / "generated" / "openapi_python_client"
-COMMITTED_MODELS = ROOT / "src" / "pyunsdg" / "models.py"
+COMMITTED_MODELS = ROOT / "src" / "sdgdata" / "models.py"
 
 
 def main() -> int:
@@ -34,7 +34,7 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    with tempfile.TemporaryDirectory(prefix="pyunsdg-models-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="sdgdata-models-") as tmp:
         tmp_path = Path(tmp)
         generated_client = tmp_path / "openapi_python_client"
         generated_models = tmp_path / "models.py"

@@ -3,8 +3,8 @@
 `data/un-api-openapi.json` is the source of truth for generated models.
 
 Model generation uses `openapi-python-client`, but the generated API client is
-not the public package interface. The hand-written `UNSDClient` remains the main
-client, and `pyunsdg.models` preserves the public Pydantic imports used by the
+not the public package interface. The hand-written `SDGClient` remains the main
+client, and `sdgdata.models` preserves the public Pydantic imports used by the
 package and tests.
 
 ## Generated Outputs
@@ -13,8 +13,8 @@ Model generation commits two outputs:
 
 - `generated/openapi_python_client/`: model-related output from
   `openapi-python-client`, kept outside the public package for reviewable diffs.
-- `src/pyunsdg/models.py`: the Pydantic compatibility layer used by
-  `UNSDClient` and public imports such as `from pyunsdg.models import ApiTarget`.
+- `src/sdgdata/models.py`: the Pydantic compatibility layer used by
+  `SDGClient` and public imports such as `from sdgdata.models import ApiTarget`.
 
 ## Regenerate Models
 

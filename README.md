@@ -1,6 +1,6 @@
-# pyunsdg
+# sdgdata
 
-`pyunsdg` is a Python client for the United Nations Statistics Division SDG API.
+`sdgdata` is an unofficial Python client for SDG data from the UNSD SDG API.
 
 It provides a simple client to retrieve Sustainable Development Goal metadata
 and data from Python, with models derived from the UNSD SDG API schema.
@@ -15,16 +15,25 @@ and data from Python, with models derived from the UNSD SDG API schema.
 
 ## Installation
 
+Install from PyPI:
+
 ```bash
-uv add git+https://github.com/v-a-s-a/pyunsdg.git
+uv add sdgdata
+```
+
+or:
+
+```bash
+pip install sdgdata
 ```
 
 ## Quick Start
 
 ```python
-from pyunsdg import UNSDClient, is_single_time_series
+from sdgdata import SDGClient
+from sdgdata.client import is_single_time_series
 
-client = UNSDClient()
+client = SDGClient()
 
 # Find available geographic areas and SDG targets.
 areas = client.get_geo_areas()

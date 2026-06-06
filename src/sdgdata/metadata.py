@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-from pyunsdg.models import ApiDimension
+from sdgdata.models import ApiDimension
 
 
 class SeriesMetadata(BaseModel):

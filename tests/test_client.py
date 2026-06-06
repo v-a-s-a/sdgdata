@@ -4,9 +4,10 @@ import httpx
 import pytest
 import respx
 
-from pyunsdg import UNSDClient, debug, is_single_time_series
-from pyunsdg.client import BASE_URL, _release_sort_key
-from pyunsdg.models import ApiDimension, ApiGeoArea, ApiSerie, ApiTarget
+import sdgdata.debug as debug
+from sdgdata import SDGClient
+from sdgdata.client import BASE_URL, _release_sort_key, is_single_time_series
+from sdgdata.models import ApiDimension, ApiGeoArea, ApiSerie, ApiTarget
 from tests.helpers import AREA_CODE, SERIES_CODE, TARGET_CODE, load_fixture
 
 pytestmark = pytest.mark.mock
@@ -26,7 +27,7 @@ def test_get_geo_areas_returns_live_derived_pydantic_models():
         return_value=httpx.Response(200, json=fixture)
     )
 
-    areas = UNSDClient().get_geo_areas()
+    areas = SDGClient().get_geo_areas()
 
     assert route.called
     assert areas == [ApiGeoArea(**item) for item in fixture]
@@ -37,7 +38,7 @@ def test_debug_output_is_disabled_by_default(capsys):
     fixture = load_fixture("geo_area_list.json")
     respx.get(f"{BASE_URL}/sdg/GeoArea/List").mock(return_value=httpx.Response(200, json=fixture))
 
-    UNSDClient().get_geo_areas()
+    SDGClient().get_geo_areas()
 
     captured = capsys.readouterr()
     assert captured.err == ""
@@ -49,11 +50,11 @@ def test_debug_output_prints_constructed_query(capsys):
     respx.get(f"{BASE_URL}/sdg/Target/List").mock(return_value=httpx.Response(200, json=fixture))
 
     debug.enable()
-    UNSDClient().get_targets()
+    SDGClient().get_targets()
 
     captured = capsys.readouterr()
     assert captured.out == ""
-    assert captured.err == (f"pyunsdg query: {BASE_URL}/sdg/Target/List?includechildren=false\n")
+    assert captured.err == (f"sdgdata query: {BASE_URL}/sdg/Target/List?includechildren=false\n")
 
 
 @respx.mock
@@ -63,12 +64,88 @@ def test_get_targets_excludes_children_using_live_derived_data():
         return_value=httpx.Response(200, json=fixture)
     )
 
-    targets = UNSDClient().get_targets()
+    targets = SDGClient().get_targets()
 
     request = route.calls.last.request
     assert request.url.params["includechildren"] == "false"
     assert targets == [ApiTarget(**item) for item in fixture]
     assert targets[0].code == TARGET_CODE
+
+
+@respx.mock
+def test_get_targets_can_include_children():
+    fixture = load_fixture("target_list_with_children.json")
+    route = respx.get(f"{BASE_URL}/sdg/Target/List").mock(
+        return_value=httpx.Response(200, json=fixture)
+    )
+
+    targets = SDGClient().get_targets(include_children=True)
+
+    request = route.calls.last.request
+    assert request.url.params["includechildren"] == "true"
+    assert targets == [ApiTarget(**item) for item in fixture]
+    assert targets[0].indicators
+
+
+@respx.mock
+def test_get_goals_uses_plural_public_method():
+    route = respx.get(f"{BASE_URL}/sdg/Goal/List").mock(return_value=httpx.Response(200, json=[]))
+
+    goals = SDGClient().get_goals()
+
+    assert route.called
+    assert goals == []
+
+
+@respx.mock
+def test_get_indicators_includes_series_by_default():
+    fixture = load_fixture("target_list_with_children.json")
+    route = respx.get(f"{BASE_URL}/sdg/Indicator/List").mock(
+        return_value=httpx.Response(200, json=fixture)
+    )
+
+    indicators = SDGClient().get_indicators()
+
+    request = route.calls.last.request
+    assert request.url.params["includechildren"] == "true"
+    assert indicators == [ApiTarget(**item) for item in fixture]
+
+
+@respx.mock
+def test_get_indicators_can_exclude_series():
+    route = respx.get(f"{BASE_URL}/sdg/Indicator/List").mock(
+        return_value=httpx.Response(200, json=[])
+    )
+
+    indicators = SDGClient().get_indicators(include_series=False)
+
+    request = route.calls.last.request
+    assert request.url.params["includechildren"] == "false"
+    assert indicators == []
+
+
+@respx.mock
+def test_get_concepts_uses_plural_public_method():
+    route = respx.get(f"{BASE_URL}/sdg/SDMXMetadata/GetConceptsMasterList").mock(
+        return_value=httpx.Response(200, json=[])
+    )
+
+    concepts = SDGClient().get_concepts()
+
+    assert route.called
+    assert concepts == []
+
+
+@respx.mock
+def test_get_sdmx_series_uses_plural_public_method():
+    route = respx.get(f"{BASE_URL}/sdg/SDMXMetadata/GetSeries").mock(
+        return_value=httpx.Response(200, json=[])
+    )
+
+    series = SDGClient().get_sdmx_series()
+
+    assert route.called
+    assert series == []
 
 
 def _target_series_fixture(fixture):
@@ -152,7 +229,7 @@ def test_get_series_codes_returns_latest_releases_by_default():
         return_value=httpx.Response(200, json=fixture)
     )
 
-    series = UNSDClient().get_series_codes(target_code=TARGET_CODE)
+    series = SDGClient().get_series_codes(target_code=TARGET_CODE)
     all_releases = _target_series_fixture(fixture)
 
     request = route.calls.last.request
@@ -170,7 +247,7 @@ def test_get_series_codes_can_return_all_releases():
         return_value=httpx.Response(200, json=fixture)
     )
 
-    series = UNSDClient().get_series_codes(target_code=TARGET_CODE, all_releases=True)
+    series = SDGClient().get_series_codes(target_code=TARGET_CODE, all_releases=True)
 
     request = route.calls.last.request
     assert request.url.params["includechildren"] == "true"
@@ -183,7 +260,7 @@ def test_get_indicator_series_returns_grouped_metadata_and_dimensions():
     fixture, route = _mock_target_list_with_children()
     dimension_routes = _mock_dimensions_for_series_codes({"SH_ACS_UNHC", "SH_ACS_UNHC_25"})
 
-    metadata = UNSDClient().get_indicator_series("3.8.1")
+    metadata = SDGClient().get_indicator_series("3.8.1")
 
     request = route.calls.last.request
     assert request.url.params["includechildren"] == "true"
@@ -217,7 +294,7 @@ def test_get_target_series_returns_nested_indicator_metadata():
     fixture, route = _mock_target_list_with_children()
     dimension_routes = _mock_dimensions_for_series_codes(_unique_series_codes_for_target(fixture))
 
-    metadata = UNSDClient().get_target_series(TARGET_CODE)
+    metadata = SDGClient().get_target_series(TARGET_CODE)
 
     request = route.calls.last.request
     assert request.url.params["includechildren"] == "true"
@@ -239,7 +316,7 @@ def test_get_indicator_series_raises_for_unknown_indicator():
     _mock_target_list_with_children()
 
     with pytest.raises(ValueError, match="indicator code 'not-an-indicator' was not found"):
-        UNSDClient().get_indicator_series("not-an-indicator")
+        SDGClient().get_indicator_series("not-an-indicator")
 
 
 @respx.mock
@@ -247,7 +324,7 @@ def test_get_target_series_raises_for_unknown_target():
     _mock_target_list_with_children()
 
     with pytest.raises(ValueError, match="target code 'not-a-target' was not found"):
-        UNSDClient().get_target_series("not-a-target")
+        SDGClient().get_target_series("not-a-target")
 
 
 @respx.mock
@@ -257,7 +334,7 @@ def test_get_series_dimensions_returns_live_derived_pydantic_models():
         return_value=httpx.Response(200, json=fixture)
     )
 
-    dimensions = UNSDClient().get_series_dimensions(SERIES_CODE)
+    dimensions = SDGClient().get_series_dimensions(SERIES_CODE)
 
     assert route.called
     assert dimensions == [ApiDimension(**item) for item in fixture]
@@ -275,7 +352,7 @@ def test_get_series_data_uses_live_derived_response_and_query_params():
         return_value=httpx.Response(200, json=fixture)
     )
 
-    data = UNSDClient().get_series_data(
+    data = SDGClient().get_series_data(
         [SERIES_CODE],
         area_code=AREA_CODE,
         release_code="2026.Q1.G.01",
@@ -300,7 +377,7 @@ def test_get_series_data_can_request_all_dimensions():
         return_value=httpx.Response(200, json=fixture)
     )
 
-    data = UNSDClient().get_series_data(
+    data = SDGClient().get_series_data(
         [SERIES_CODE],
         area_code=AREA_CODE,
         dimensions="all",
@@ -318,7 +395,7 @@ def test_get_series_data_sends_custom_dimensions():
         return_value=httpx.Response(200, json=fixture)
     )
 
-    data = UNSDClient().get_series_data(
+    data = SDGClient().get_series_data(
         [SERIES_CODE],
         area_code=AREA_CODE,
         dimensions={"Age": "ALLAGE", "Sex": ["BOTHSEX"]},
@@ -343,7 +420,7 @@ def test_get_series_data_sends_time_period_range():
         ]
     )
 
-    data = UNSDClient().get_series_data(
+    data = SDGClient().get_series_data(
         [SERIES_CODE],
         area_code=AREA_CODE,
         start_period="2015",
@@ -367,7 +444,7 @@ def test_get_series_data_omits_time_period_params_by_default():
         return_value=httpx.Response(200, json=fixture)
     )
 
-    UNSDClient().get_series_data([SERIES_CODE], area_code=AREA_CODE)
+    SDGClient().get_series_data([SERIES_CODE], area_code=AREA_CODE)
 
     request = route.calls.last.request
     assert "timePeriod" not in request.url.params
@@ -382,7 +459,7 @@ def test_get_series_data_returns_empty_for_inverted_time_period_range():
         return_value=httpx.Response(200, json={"data": []})
     )
 
-    data = UNSDClient().get_series_data(
+    data = SDGClient().get_series_data(
         [SERIES_CODE],
         start_period="2017",
         end_period="2015",
@@ -398,7 +475,7 @@ def test_get_series_data_requires_end_period_with_start_period():
         ValueError,
         match="start_period and end_period must be provided together",
     ):
-        UNSDClient().get_series_data([SERIES_CODE], start_period="2015")
+        SDGClient().get_series_data([SERIES_CODE], start_period="2015")
 
 
 def test_get_series_data_requires_start_period_with_end_period():
@@ -406,7 +483,7 @@ def test_get_series_data_requires_start_period_with_end_period():
         ValueError,
         match="start_period and end_period must be provided together",
     ):
-        UNSDClient().get_series_data([SERIES_CODE], end_period="2017")
+        SDGClient().get_series_data([SERIES_CODE], end_period="2017")
 
 
 @respx.mock
@@ -421,7 +498,7 @@ def test_get_series_data_paginates_until_partial_page():
         ]
     )
 
-    data = UNSDClient().get_series_data([SERIES_CODE], area_code=AREA_CODE)
+    data = SDGClient().get_series_data([SERIES_CODE], area_code=AREA_CODE)
 
     assert len(data) == 1001
     assert route.call_count == 2
@@ -441,11 +518,11 @@ def test_debug_output_prints_each_paginated_series_data_query(capsys):
     )
 
     debug.enable()
-    UNSDClient().get_series_data([SERIES_CODE], area_code=AREA_CODE, dimensions="all")
+    SDGClient().get_series_data([SERIES_CODE], area_code=AREA_CODE, dimensions="all")
 
     lines = capsys.readouterr().err.splitlines()
     assert len(lines) == 2
-    assert all(line.startswith(f"pyunsdg query: {BASE_URL}/sdg/Series/Data?") for line in lines)
+    assert all(line.startswith(f"sdgdata query: {BASE_URL}/sdg/Series/Data?") for line in lines)
     assert "page=1" in lines[0]
     assert "page=2" in lines[1]
 
@@ -468,7 +545,7 @@ def test_get_series_data_uses_total_pages_when_available():
         ]
     )
 
-    data = UNSDClient().get_series_data([SERIES_CODE], area_code=AREA_CODE)
+    data = SDGClient().get_series_data([SERIES_CODE], area_code=AREA_CODE)
 
     assert len(data) == 2000
     assert route.call_count == 2
@@ -490,7 +567,7 @@ def test_get_series_data_fetches_coarsest_dimensions_per_series():
         ]
     )
 
-    data = UNSDClient().get_series_data([SERIES_CODE, other_series_code])
+    data = SDGClient().get_series_data([SERIES_CODE, other_series_code])
 
     assert data == [observation, other_observation]
     assert route.call_count == 2

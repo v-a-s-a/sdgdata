@@ -1,17 +1,45 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools>=77.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pyunsdg"
+name = "sdgdata"
 version = "0.1.0"
 description = "Simple Python client for the United Nations Statistics Division SDG API"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Vassily Trubetskoy", email = "3219751+v-a-s-a@users.noreply.github.com" },
+]
 requires-python = ">=3.12"
+keywords = [
+    "sdg",
+    "statistics",
+    "sustainable-development-goals",
+    "united-nations",
+    "unsd",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
 dependencies = [
     "httpx>=0.28.1",
     "pydantic>=2.12.3",
 ]
+
+[project.urls]
+Homepage = "https://github.com/v-a-s-a/sdgdata"
+Repository = "https://github.com/v-a-s-a/sdgdata"
+Issues = "https://github.com/v-a-s-a/sdgdata/issues"
+Documentation = "https://github.com/v-a-s-a/sdgdata#readme"
 
 [dependency-groups]
 dev = [
@@ -57,4 +85,4 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["pyunsdg*"]
+include = ["sdgdata*"]

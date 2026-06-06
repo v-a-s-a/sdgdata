@@ -3,7 +3,7 @@ import os
 import httpx
 import pytest
 
-from pyunsdg.client import BASE_URL
+from sdgdata.client import BASE_URL
 from tests.helpers import (
     AREA_CODE,
     SERIES_CODE,
@@ -15,8 +15,8 @@ from tests.helpers import (
 
 @pytest.mark.live
 @pytest.mark.skipif(
-    os.environ.get("PYUNSDG_LIVE_TESTS") != "1",
-    reason="set PYUNSDG_LIVE_TESTS=1 to call the live UNSD API",
+    os.environ.get("SDGDATA_LIVE_TESTS") != "1",
+    reason="set SDGDATA_LIVE_TESTS=1 to call the live UNSD API",
 )
 def test_live_unsd_api_matches_mock_fixture_shape():
     fixtures = {

@@ -7,7 +7,7 @@ _enabled = False
 
 def enable() -> None:
     """
-    Enables debug query output for all pyunsdg clients in this process.
+    Enables debug query output for all sdgdata clients in this process.
     """
     global _enabled
     _enabled = True
@@ -15,7 +15,7 @@ def enable() -> None:
 
 def disable() -> None:
     """
-    Disables debug query output for all pyunsdg clients in this process.
+    Disables debug query output for all sdgdata clients in this process.
     """
     global _enabled
     _enabled = False
@@ -33,4 +33,4 @@ def print_query(request: httpx.Request) -> None:
     Prints the fully constructed request URL when debug mode is enabled.
     """
     if _enabled:
-        print(f"pyunsdg query: {request.url}", file=sys.stderr)
+        print(f"sdgdata query: {request.url}", file=sys.stderr)

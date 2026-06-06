@@ -5,7 +5,7 @@ from typing import Literal
 
 import httpx
 
-from pyunsdg.models import (
+from sdgdata.models import (
     ApiDimension,
     ApiGeoArea,
     ApiGoal,
@@ -195,7 +195,7 @@ def is_single_time_series(records: list[dict]) -> bool:
     return len({_time_series_key(record) for record in records}) == 1
 
 
-class UNSDClient:
+class SDGClient:
     def __init__(self):
         self.client = httpx.Client(base_url=BASE_URL, timeout=30.0)
 
@@ -204,11 +204,14 @@ class UNSDClient:
         debug.print_query(request)
         return self.client.send(request)
 
-    def get_targets(self) -> list[ApiTarget]:
+    def get_targets(self, include_children: bool = False) -> list[ApiTarget]:
         """
-        Returns all targets and descriptions.
+        Fetches all targets, optionally including their indicators and series.
         """
-        return self.get_target_list(include_children=False)
+        response = self._get("/sdg/Target/List", params={"includechildren": include_children})
+        response.raise_for_status()
+        data = response.json()
+        return [ApiTarget(**item) for item in data]
 
     def get_series_codes(
         self, target_code: str | None = None, *, all_releases: bool = False
@@ -216,7 +219,7 @@ class UNSDClient:
         """
         Returns latest series codes and descriptions, optionally filtered by target code.
         """
-        targets = self.get_target_list(include_children=True)
+        targets = self.get_targets(include_children=True)
         series_list = []
         for target in targets:
             if target_code and target.code != target_code:
@@ -244,7 +247,7 @@ class UNSDClient:
         """
         Returns grouped series metadata and dimensions for an indicator.
         """
-        for target in self.get_target_list(include_children=True):
+        for target in self.get_targets(include_children=True):
             for indicator in target.indicators or []:
                 if indicator.code == indicator_code:
                     series_codes = {
@@ -261,7 +264,7 @@ class UNSDClient:
         """
         Returns grouped indicator and series metadata for a target.
         """
-        for target in self.get_target_list(include_children=True):
+        for target in self.get_targets(include_children=True):
             if target.code != target_code:
                 continue
 
@@ -289,18 +292,12 @@ class UNSDClient:
         """
         Returns a list of geographic areas and their M49 codes.
         """
-        return self.get_geo_area_list()
-
-    def get_target_list(self, include_children: bool = True) -> list[ApiTarget]:
-        """
-        Fetches all targets, optionally including their indicators and series.
-        """
-        response = self._get("/sdg/Target/List", params={"includechildren": include_children})
+        response = self._get("/sdg/GeoArea/List")
         response.raise_for_status()
         data = response.json()
-        return [ApiTarget(**item) for item in data]
+        return [ApiGeoArea(**item) for item in data]
 
-    def get_goal_list(self) -> list[ApiGoal]:
+    def get_goals(self) -> list[ApiGoal]:
         """
         Fetches all SDG goals.
         """
@@ -309,7 +306,7 @@ class UNSDClient:
         data = response.json()
         return [ApiGoal(**item) for item in data]
 
-    def get_indicator_list(self, include_series: bool = True) -> list[ApiTarget]:
+    def get_indicators(self, include_series: bool = True) -> list[ApiTarget]:
         """
         Fetches all indicators, optionally including their series.
         """
@@ -318,16 +315,7 @@ class UNSDClient:
         data = response.json()
         return [ApiTarget(**item) for item in data]
 
-    def get_geo_area_list(self) -> list[ApiGeoArea]:
-        """
-        Fetches all geographic areas.
-        """
-        response = self._get("/sdg/GeoArea/List")
-        response.raise_for_status()
-        data = response.json()
-        return [ApiGeoArea(**item) for item in data]
-
-    def get_concept_list(self) -> list[ConceptsMasterData]:
+    def get_concepts(self) -> list[ConceptsMasterData]:
         """
         Fetches all concepts.
         """
@@ -335,13 +323,13 @@ class UNSDClient:
         response.raise_for_status()
         return [ConceptsMasterData(**item) for item in response.json()]
 
-    def get_sdmx_series_list(self) -> list[SDMXMetaDataResponse]:
+    def get_sdmx_series(self) -> list[SDMXMetaDataResponse]:
         """
         Fetches all SDMX series metadata.
         """
         response = self._get("sdg/SDMXMetadata/GetSeries")
         response.raise_for_status()
-        return response.json()
+        return [SDMXMetaDataResponse(**item) for item in response.json()]
 
     def get_series_dimensions(self, series_code: str) -> list[ApiDimension]:
         """
