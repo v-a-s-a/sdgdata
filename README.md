@@ -1,5 +1,11 @@
 # sdgdata
 
+[![CI](https://github.com/v-a-s-a/sdgdata/actions/workflows/ci.yml/badge.svg)](https://github.com/v-a-s-a/sdgdata/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/sdgdata.svg)](https://pypi.org/project/sdgdata/)
+[![Python](https://img.shields.io/pypi/pyversions/sdgdata.svg)](https://pypi.org/project/sdgdata/)
+[![License](https://img.shields.io/pypi/l/sdgdata.svg)](https://github.com/v-a-s-a/sdgdata/blob/main/LICENSE)
+[![Status](https://img.shields.io/pypi/status/sdgdata.svg)](https://pypi.org/project/sdgdata/)
+
 `sdgdata` is an unofficial Python client for SDG data from the UNSD SDG API.
 
 It provides a simple client to retrieve Sustainable Development Goal metadata
