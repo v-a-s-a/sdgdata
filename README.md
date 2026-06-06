@@ -11,14 +11,6 @@
 It provides a simple client to retrieve Sustainable Development Goal metadata
 and data from Python, with models derived from the UNSD SDG API schema.
 
-## Features
-
-- Fetch SDG goals, targets, indicators, and series metadata.
-- Look up geographic areas and M49 area codes.
-- Retrieve paginated SDG series observations with simple Python calls.
-- Validate structured API responses with Pydantic models.
-- Load observation data into analysis tools such as pandas or Polars.
-
 ## Installation
 
 Install from PyPI:
@@ -81,9 +73,7 @@ custom_slice = client.get_series_data(
 ```
 
 `get_series_data()` returns a list of dictionaries, making it straightforward
-to create a dataframe for analysis. It normalizes singleton `goal`, `target`,
-and `indicator` arrays to strings, and integral `timePeriodStart` values to
-integers. By default, it filters to the coarsest available disaggregation, such
+to create a dataframe for analysis. By default, it filters to the coarsest available disaggregation, such
 as all ages, both sexes, and total groups when those dimension values exist.
 For the upstream observation field descriptions, see the
 [UNSD SDG API Swagger documentation](https://unstats.un.org/sdgapi/swagger/).
