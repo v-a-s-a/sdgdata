@@ -6,8 +6,9 @@ import respx
 
 import sdgdata.debug as debug
 from sdgdata import SDGClient
-from sdgdata.client import BASE_URL, _release_sort_key, is_single_time_series
+from sdgdata.client import BASE_URL, is_single_time_series
 from sdgdata.models import ApiDimension, ApiGeoArea, ApiSerie, ApiTarget
+from sdgdata.utilities import _release_sort_key
 from tests.helpers import AREA_CODE, SERIES_CODE, TARGET_CODE, load_fixture
 
 pytestmark = pytest.mark.mock
