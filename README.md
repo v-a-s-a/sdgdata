@@ -41,14 +41,16 @@ targets = client.get_targets()
 
 # Find latest-release series codes for a target.
 series = client.get_series_codes(target_code="3.8")
+series_code = series[-1].code
+area_code = areas[0].geoAreaCode
 
 # Inspect available disaggregation dimensions for a series.
-dimensions = client.get_series_dimensions(series[-1].code)
+dimensions = client.get_series_dimensions(series_code)
 
 # Fetch the coarsest available disaggregation by default.
 data = client.get_series_data(
-    series_codes=[series[-1].code],
-    area_code=areas[0].geoAreaCode,
+    series_codes=[series_code],
+    area_code=area_code,
     start_period="2015",
     end_period="2026",
 )
@@ -57,8 +59,8 @@ assert is_single_time_series(data)
 
 # To fetch every disaggregation, opt into the unfiltered API response.
 all_disaggregations = client.get_series_data(
-    series_codes=[series[-1].code],
-    area_code=areas[0].geoAreaCode,
+    series_codes=[series_code],
+    area_code=area_code,
     start_period="2015",
     end_period="2026",
     dimensions="all",
@@ -66,8 +68,8 @@ all_disaggregations = client.get_series_data(
 
 # Or request a specific disaggregation slice.
 custom_slice = client.get_series_data(
-    series_codes=[series[-1].code],
-    area_code=areas[0].geoAreaCode,
+    series_codes=[series_code],
+    area_code=area_code,
     dimensions={"Reporting Type": "G"},
 )
 ```
